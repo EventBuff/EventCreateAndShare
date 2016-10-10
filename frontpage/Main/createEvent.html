@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Search Activity</title>
+    <title>Search Event</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -39,16 +39,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Activity Create and Share</a>
+                <a class="navbar-brand" href="index.html">Event Create and Share</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                         <a href="createActivity.html">Create Activity</a>
+                        <a href="createEvent.html">Create Event</a>
                     </li>
                     <li>
-                        <a href="searchActivity.html">Search Activity</a>
+                        <a href="searchEvent.html">Search Event</a>
                     </li>
                     <li>
                         <a href="profile.html">Profile</a>
@@ -66,13 +66,37 @@
         <div class="row">
 
             <div class="col-md-3">
-                <p class="lead">Search Activity</p>
-                <form method="get" id="searchform" action="">
-                <fieldset class="search">
-                    <input type="text" style="height:30px"; class="box" name="search" id="search" class="inputText" placeholder="Search Activity">
-                    <button class="btn" title="SEARCH">Search</button>
-                    </fieldset>
-                    </form>
+                <p class="lead">Create Event</p>
+               <button class="btn" title="Create" data-toggle="modal" data-target="#myModal">Create</button>
+               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Create Your Own Event</h4>
+            </div>
+            <div class="modal-body">
+                Event Photo:<br>
+                <input type="file" id="choose-img" onchange="setImagePreview();"><br>
+                Event Name:<br>
+                <input type="text" name="eventName" required><br>
+                Location:<br>
+                <input type="text" name="location" required><br>
+                Start Date:<br>
+                <input type="date" name="startDate" required><br>
+                End Date:<br>
+                <input type="date" name="endDate" required><br>
+                Description:<br>
+                <textarea name="description" cols=30 rows=4>
+                </textarea>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+           </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
             </div>
 
             <div class="col-md-9">
