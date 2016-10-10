@@ -1,0 +1,61 @@
+.layer_form_tips {
+    position: absolute;
+    z-index: 9999;
+}
+
+.layer_form_tips .bg {
+    padding: 2px;
+    border-radius: 4px;
+    background: url("../../../images/common/layer_bg.png?id=1370232467958") repeat;
+}
+
+.layer_form_tips .content {
+    background: #fffae1;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 5px 20px 5px 5px;
+}
+
+.layer_form_tips .icon_close {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+}
+
+.layer_form_tips .tips span {
+    vertical-align: middle;
+}
+
+.layer_form_tips .arrow_tips {
+    background: url("../../../images/layer/layer_arrow_tips.png?id=1370232467959") no-repeat;
+    width: 14px;
+    height: 8px;
+    bottom: -5px;
+    left: 50%;
+    margin-left: -7px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.layer_form_tips .tips_multi {
+    padding: 0 0 0 5px;
+}
+
+.layer_form_tips .tips_multi .txt {
+    line-height: 22px;
+}
+
+.layer_form_tips .tips_multi .txt a {
+    color: #F48C12
+}
+
+#js_homestyle_css_module_layer_layer_form_tips {
+    height: 42px;
+}
+
+#js_style_css_module_layer_layer_form_tips {
+    height: 42px;
+}
+
+
