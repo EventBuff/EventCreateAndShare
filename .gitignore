@@ -1,0 +1,17 @@
+## Target Files
+BackEnd/target/
+
+## .idea configuration files
+BackEnd/.idea/
+
+### Java ###
+*.class
+
+
+
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.properties
