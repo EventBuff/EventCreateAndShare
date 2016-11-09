@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:56:58
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-07 17:53:49
+* @Last Modified time: 2016-11-09 11:48:40
 */
 
 
@@ -21,26 +21,67 @@ class Profile extends Component {
 
     this.state = {
       posts: '',
-      postsCheckNum: 0
+      postsCheckNum: 0,
+      profileData: {}
     };
+    this.checkProfile = this.checkProfile.bind(this);
     this.showProfile = this.showProfile.bind(this);
+    this.editProfile = this.editProfile.bind(this);
+    this.showEditProfile = this.showEditProfile.bind(this);
   }
   
 
-  componentDidMount() {
+  checkProfile(){ 
     const slug = this.props.params.slug;
     console.log("for userid " + slug);
     axios.get('/profile', {
       params: {
-        // userid: slug  
+        userid: slug  
       }
       }).then(res => {
         this.showProfile(res.data);
       });
   }
 
+  componentDidMount() {
+    this.checkProfile();
+  }
+
   showProfile(data) {
+    this.setState({
+      profileData: JSON.stringify(data)
+    })
     console.log(data);
+    if (data === null || data.length === 0) {
+      this.setState({ 
+          posts: ''
+      });
+    } else {
+      var content = 
+          <div>
+            <h4> {data.email} </h4>
+            <p> {data.gender} </p>
+            <p> {data.firstname} </p>
+            <p> {data.lastname} </p>
+            <p> {data.phonenumber} </p>
+          </div>;
+      this.setState({ 
+          posts: content,
+          postsCheckNum: 1
+      });
+    }
+  }
+
+  editProfile(){ 
+    this.showEditProfile(this.state.profileData);
+    console.log(this.state.profileData);
+    var data = JSON.parse(this.state.profileData);
+    console.log(data)
+    
+  }
+
+  showEditProfile(data) {
+    
     if (data === null || data.length === 0) {
       this.setState({ 
           posts: ''
@@ -72,9 +113,9 @@ class Profile extends Component {
             <Col className="ProfileNavigation" xs={12} md={3}>
               <p> Profile </p>
               <ListGroup>
-                <ListGroupItem active>Check Profile</ListGroupItem>
-                <ListGroupItem>Event History</ListGroupItem>
-                <ListGroupItem>Edit Profile</ListGroupItem>
+                <ListGroupItem className='active' onClick={this.checkProfile}>Check Profile</ListGroupItem>
+                <ListGroupItem onClick={this.eventHistory}>Event History</ListGroupItem>
+                <ListGroupItem className='active' onClick={this.editProfile}>Edit Profile</ListGroupItem>
               </ListGroup>  
             </Col>
             <Col md={9}>

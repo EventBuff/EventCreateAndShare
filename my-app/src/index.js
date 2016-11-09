@@ -21,7 +21,7 @@ const routes =
     <IndexRoute component={Home} />
     <Route path='/event' component={Event} />
     <Route path='/eventDetail/:slug' component={EventDetail} />
-    <Route path='/profile' component={Profile} />
+    <Route path='/profile/:slug' component={Profile} />
     <Route path='/login' component={Login} />
     <Route path='*' component={NotFound} />
   </Route>

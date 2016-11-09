@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 14:58:09
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-07 17:52:47
+* @Last Modified time: 2016-11-09 11:31:04
 */
 
 /*
@@ -27,7 +27,8 @@ class Navigation extends Component {
     this.state = {
       posts: '',
       value: '',
-      content: ''
+      content: '',
+      userid:'5',
     };
     this.myFunction = this.myFunction.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -106,7 +107,7 @@ class Navigation extends Component {
               <LinkContainer to="/login">
                 <NavItem eventKey="Log In">Log In</NavItem>
               </LinkContainer>
-              <LinkContainer to="/profile">
+              <LinkContainer to={`/profile/${this.state.userid}`}>
                 <NavItem eventKey="Check Profile">Profile</NavItem>
               </LinkContainer>
             </Nav>
