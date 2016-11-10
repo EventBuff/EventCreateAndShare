@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-07 17:26:13
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-07 17:46:35
+* @Last Modified time: 2016-11-09 17:20:28
 */
 
 import React, { Component } from 'react';
@@ -10,9 +10,9 @@ import React, { Component } from 'react';
 import './Login.css';
 // import Navigation from './Navigation';
 import axios from 'axios';
-import { Button, Row, Col, ListGroup, ListGroupItem, ControlLabel, Form, FormGroup, FormControl, Checkbox}
+import { Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
   from 'react-bootstrap';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 
 class Login extends Component {
   constructor(props) {
@@ -47,18 +47,14 @@ class Login extends Component {
           posts: ''
       });
     } else {
-      var content = 
-          <div>
-            <h4> {data.email} </h4>
-            <p> {data.gender} </p>
-            <p> {data.firstname} </p>
-            <p> {data.lastname} </p>
-            <p> {data.phonenumber} </p>
-          </div>;
-      this.setState({ 
-          posts: content,
-          postsCheckNum: 1
-      });
+      const userid = String(data.userid);
+      console.log(userid);
+      // window.oepn( {} , 'profile', '/profile/' + userid);
+      // this.props.history.replaceState(null, '/profile/' + {userid});
+      localStorage.setItem("userid", userid);
+      window.location.href='/profile/' + userid;
+      // window.open('/profile/' + userid);
+      // window.open("http://www.w3schools.com");
     }
   }
 
@@ -107,6 +103,9 @@ class Login extends Component {
 
     <FormGroup>
       <Col smOffset={2} sm={10}>
+        <Button onClick={this.handleClick}>
+          log in
+        </Button>
         <Button onClick={this.handleClick}>
           Sign in
         </Button>

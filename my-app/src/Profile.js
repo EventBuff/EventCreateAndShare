@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:56:58
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-09 11:48:40
+* @Last Modified time: 2016-11-09 17:21:33
 */
 
 
@@ -11,9 +11,9 @@ import React, { Component } from 'react';
 import './Profile.css';
 // import Navigation from './Navigation';
 import axios from 'axios';
-import { Button, Row, Col, ListGroup, ListGroupItem}
+import { Row, Col, ListGroup, ListGroupItem}
   from 'react-bootstrap';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 
 class Profile extends Component {
   constructor(props) {
@@ -103,7 +103,7 @@ class Profile extends Component {
   }
 
   render() {
-    var value = this.state.value;
+    // var value = this.state.value;
     var posts = this.state.posts;
     // list groun need to changed for editting
     return (
