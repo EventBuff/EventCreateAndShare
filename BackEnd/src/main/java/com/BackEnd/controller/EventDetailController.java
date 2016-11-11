@@ -19,15 +19,13 @@ public class EventDetailController {
     private UserRepository userRepository;
 
     @RequestMapping("/eventDetail")
-    public Event eventDetail(Integer eventid){
+    public EventDetail eventDetail(Integer eventid){
         //if event exist
-        if(eventRepository.findByEventid(eventid) != null){
-            return eventRepository.findByEventid(eventid);
-
-                //if user exist
-//                userRepository.findByUserid(eventRepository.findByEventid(eventid).getCreatorid()).getUsername() != null){
-//            return new EventDetail(eventRepository.findByEventid(eventid),
-//                    userRepository.findByUserid(eventRepository.findByEventid(eventid).getCreatorid()).getUsername());
+        if(eventRepository.findByEventid(eventid) != null &&
+                userRepository.findByUserid(eventRepository.findByEventid(eventid).getCreatorid()) != null){
+            Integer creatorid = eventRepository.findByEventid(eventid).getCreatorid();
+            return new EventDetail(eventRepository.findByEventid(eventid),
+                    userRepository.findByUserid(creatorid).getUsername());
         }
         else return null;
     }
