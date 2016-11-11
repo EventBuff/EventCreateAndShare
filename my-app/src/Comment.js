@@ -6,13 +6,12 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import './EventDetail.css';
-import Comment from './Comment';
+import './Comment.css';
 import axios from 'axios';
 import { Link } from 'react-router';
 import { Grid } from 'react-bootstrap';
 
-class EventDetail extends Component {
+class Comment extends Component {
   static propTypes = {
     params: PropTypes.object.isRequired
   }
@@ -23,32 +22,28 @@ class EventDetail extends Component {
     this.state = {
       posts: '',
       postsCheckNum: 0,
-      eventid: this.props.params.slug,
       userid: localStorage["userid"]
     };
-    this.showEventDetail = this.showEventDetail.bind(this)
+    this.showCommentDetail = this.showCommentDetail.bind(this);
 
   }
 
   componentWillMount() {
-    const slug = this.props.params.slug;
-    console.log(slug);
+
   }
 
   componentDidMount() {
-    const slug = this.props.params.slug;
-    axios.get('/eventDetail', {
-      params: {
-        eventid: slug
-      }
-      }).then(res => {
-        this.showEventDetail(res.data);
-      });
+    //
+    // axios.get('/eventDetail', {
+    //   params: {
+    //     eventid: slug
+    //   }
+    //   }).then(res => {
+    //     this.showEventDetail(res.data);
+    //   });
   }
 
-  showEventDetail(data) {
-    console.log(data);
-    console.log("is log in" + this.state.userid);
+  showCommentDetail(data) {
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
@@ -68,6 +63,7 @@ class EventDetail extends Component {
   }
 
   render() {
+    console.log("props eventid " + this.props.eventid);
     let detail =
       <Grid>
         <h2>We could not find that event.</h2>
@@ -80,13 +76,11 @@ class EventDetail extends Component {
 
     return(
       <div>
-        <div className="ReactEshop__nav-spacer" />
         {posts}
-        <Comment eventid={this.state.eventid}/>
       </div>
     );
   }
 
 }
 
-export default EventDetail;
+export default Comment;

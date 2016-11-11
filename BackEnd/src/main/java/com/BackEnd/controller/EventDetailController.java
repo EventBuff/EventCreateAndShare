@@ -1,5 +1,6 @@
 package com.BackEnd.controller;
 
+import com.BackEnd.domain.Event;
 import com.BackEnd.domain.EventRepository;
 import com.BackEnd.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,15 @@ public class EventDetailController {
     private UserRepository userRepository;
 
     @RequestMapping("/eventDetail")
-    public EventDetail eventDetail(Integer eventid){
+    public Event eventDetail(Integer eventid){
         //if event exist
-        if(eventRepository.findByEventid(eventid) != null &&
+        if(eventRepository.findByEventid(eventid) != null){
+            return eventRepository.findByEventid(eventid);
+
                 //if user exist
-                userRepository.findByUserid(eventRepository.findByEventid(eventid).getCreatorid()).getUsername() != null){
-            return new EventDetail(eventRepository.findByEventid(eventid),
-                    userRepository.findByUserid(eventRepository.findByEventid(eventid).getCreatorid()).getUsername());
+//                userRepository.findByUserid(eventRepository.findByEventid(eventid).getCreatorid()).getUsername() != null){
+//            return new EventDetail(eventRepository.findByEventid(eventid),
+//                    userRepository.findByUserid(eventRepository.findByEventid(eventid).getCreatorid()).getUsername());
         }
         else return null;
     }
