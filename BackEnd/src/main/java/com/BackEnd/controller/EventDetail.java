@@ -1,7 +1,6 @@
 package com.BackEnd.controller;
 
 import com.BackEnd.domain.Event;
-
 /**
  * Created by yanli on 11/7/16.
  */
