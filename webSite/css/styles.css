@@ -1,0 +1,82 @@
+.bgimage {
+	background-image: url('../images/y_01.jpg');
+	background-position: center center;
+	background-size: cover;
+	height: 50px;
+}
+
+.bck_main {
+	background-image: url('../images/bck_main.jpg');
+	background-position: center center;
+	background-size: cover;
+	height: 1200px;
+	padding-top: 20px;
+
+}
+
+
+.navbar_header { 
+	font-size: 20px; 
+	color: 	#008000 !important;
+	text-decoration: underline;
+	font-style: italic;
+	font-weight: bold;
+	font-variant: small-caps;
+}
+
+.navbar_panel{
+    background-color: #FAEBD7;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #000000 !important;
+
+}
+
+.navbar_text { 
+	font-size: 15px; 
+	color: 	#008000 !important;
+	text-decoration: underline;
+	font-style: italic;
+	font-weight: bold;
+	font-variant: small-caps;
+
+}
+
+.padding {
+	padding: 50px 30px 50px 80px;
+}
+.navbar-fnt {
+    color: blue;
+}
+.navbar-backgrnd {
+    color: #CC3333;
+}
+
+
+
+.navbar_porb {
+	background-color: transparent;
+	font-family: 'Droid Sans', sans-serif;
+	font-size: 35px; 
+	color: black;
+}
+
+.navbar_icon {
+	background-color: transparent;
+	font-family: 'Droid Sans', sans-serif;
+	font-size: 25px; 
+	color: black;
+	font-color: black;
+}
+
+.sample {
+	position:absolute;
+	top:25px;
+	z-index:10;
+	width:100%;
+	background-color: transparent;
+	padding-right: 20px;
+	font-family: 'Droid Sans', sans-serif;
+	font-size: 17px; 
+	color: white;
+}
