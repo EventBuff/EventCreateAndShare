@@ -24,10 +24,12 @@ class EventDetail extends Component {
       posts: '',
       postsCheckNum: 0,
       eventid: this.props.params.slug,
-      userid: localStorage["userid"]
+      userid: localStorage["userid"],
+      has_join_event: 0
     };
     this.showEventDetail = this.showEventDetail.bind(this)
-
+    this.joinEvent = ths.joinEvent.bind(this);
+    this.leaveEvent = this.leaveEvent.bind(this);
   }
 
   componentWillMount() {
@@ -44,11 +46,49 @@ class EventDetail extends Component {
       }).then(res => {
         this.showEventDetail(res.data);
       });
+    // Check whether this user has joined or not this event
+    axios.get('/eventDetail/check', {
+      params: {
+        eventid: this.state.eventid,
+        userid: this.state.userid
+      }
+      }).then(res => {
+        this.setState({
+            has_join_event: res.data == 'success'? 1 : 0;
+        });
+        alert(res.data);
+      });
+  }
+
+  joinEvent(){
+    axios.get('/eventDetail/join', {
+      params: {
+        eventid: this.state.eventid,
+        userid: this.state.userid
+      }
+      }).then(res => {
+        alert(res.data);
+      });
+  }
+
+  leaveEvent(){
+    axios.get('/eventDetail/leave', {
+      params: {
+        eventid: this.state.eventid,
+        userid: this.state.userid
+      }
+      }).then(res => {
+        alert(res.data);
+      });
   }
 
   showEventDetail(data) {
     console.log("Event Data = " + data);
     console.log("is log in id = " + this.state.userid);
+    var has_join_event_content = this.state.has_join_event
+      ? <Button onClick={this.leaveEvent}>Leave Event</Button>
+      : <Button onClick={this.joinEvent}>Join Event</Button>
+
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
@@ -59,6 +99,7 @@ class EventDetail extends Component {
             <h4><Link to={`/eventDetail/${data.eventid}`}> {data.eventtitle} </Link></h4>
             <p> {data.eventtag} </p>
             <p> {data.eventdescription} </p>
+            {has_join_event_content}
             <Comment eventid={this.state.eventid}/>
           </div>
       this.setState({
