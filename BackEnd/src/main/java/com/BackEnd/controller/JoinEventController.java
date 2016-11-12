@@ -1,4 +1,4 @@
-package com.SpringBootTest.controller;
+package com.BackEnd.controller;
 
 import com.BackEnd.domain.EventRepository;
 import com.BackEnd.domain.Event;
@@ -34,8 +34,8 @@ public class JoinEventController {
              if(userEventRepository.findByEventidAndParticipantid(eventid, userid) == null) {
                  userEventRepository.save(new com.BackEnd.domain.UserEvent(eventid, userid));
              }
-             return "You are joined this event!";
+             return "success";
         }
-        else return "You cannot join this event!";
+        else return "failure";
     }
 }
