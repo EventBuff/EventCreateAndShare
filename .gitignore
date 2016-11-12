@@ -1,4 +1,5 @@
-./idea
+.idea/
+
 ## Target Files
 BackEnd/target/
 
@@ -7,7 +8,7 @@ BackEnd/.idea/
 
 ### Java ###
 *.class
-
+*.iml
 
 
 
