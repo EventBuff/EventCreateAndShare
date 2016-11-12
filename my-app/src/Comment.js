@@ -12,24 +12,23 @@ import { Link } from 'react-router';
 import { Grid } from 'react-bootstrap';
 
 class Comment extends Component {
-  static propTypes = {
-    params: PropTypes.object.isRequired
-  }
-
   constructor(props) {
     super(props);
 
     this.state = {
       posts: '',
       postsCheckNum: 0,
-      userid: localStorage["userid"]
+      userid: localStorage["userid"],
+      eventid: this.props.eventid
     };
     this.showCommentDetail = this.showCommentDetail.bind(this);
 
   }
 
   componentWillMount() {
-
+    // this.setState({
+    //     eventid: this.props.eventid
+    // });
   }
 
   componentDidMount() {
@@ -51,9 +50,9 @@ class Comment extends Component {
     } else {
       var content =
           <div>
-            <h4><Link to={`/eventDetail/${data.eventid}`}> {data.eventtitle} </Link></h4>
-            <p> {data.eventtag} </p>
-            <p> {data.eventdescription} </p>
+            <h4></h4>
+            <p>  </p>
+            <p>  </p>
           </div>;
       this.setState({
           posts: content,
@@ -63,21 +62,17 @@ class Comment extends Component {
   }
 
   render() {
-    console.log("props eventid " + this.props.eventid);
-    let detail =
-      <Grid>
-        <h2>We could not find that event.</h2>
-        <h3>Try searching or using the top navigation to find what you are looking for.</h3>
-      </Grid>;
+    console.log("props eventid = " + this.state.eventid);
     var posts = this.state.postsCheckNum
       ? this.state.posts
-      : detail;
+      : '';
 
 
     return(
-      <div>
+        <div>
+        This is comment
         {posts}
-      </div>
+        </div>
     );
   }
 
