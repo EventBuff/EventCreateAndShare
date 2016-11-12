@@ -10,7 +10,7 @@ import './EventDetail.css';
 import Comment from './Comment';
 import axios from 'axios';
 import { Link } from 'react-router';
-import { Button, Grid } from 'react-bootstrap';
+import { Col, Button, Grid } from 'react-bootstrap';
 
 class EventDetail extends Component {
   static propTypes = {
@@ -32,6 +32,8 @@ class EventDetail extends Component {
     this.joinEvent = this.joinEvent.bind(this);
     this.leaveEvent = this.leaveEvent.bind(this);
     this.closeEvent = this.closeEvent.bind(this);
+    this.checkEvent = this.checkEvent.bind(this);
+    this.getEventDetail = this.getEventDetail.bind(this);
   }
 
   componentWillMount() {
@@ -39,16 +41,7 @@ class EventDetail extends Component {
     console.log(slug);
   }
 
-  componentDidMount() {
-    const slug = this.props.params.slug;
-    axios.get('/eventDetail', {
-      params: {
-        eventid: slug
-      }
-      }).then(res => {
-        this.showEventDetail(res.data);
-      });
-    // Check whether this user has joined or not this event
+  checkEvent(){
     axios.get('/eventDetail/check', {
       params: {
         eventid: this.state.eventid,
@@ -70,8 +63,25 @@ class EventDetail extends Component {
           is_creator: is_creator,
           has_join_event: has_join_event
         });
-        alert(res.data);
-      });
+        console.log(is_creator, has_join_event);
+    });
+  }
+
+  getEventDetail(){
+    const slug = this.props.params.slug;
+    axios.get('/eventDetail', {
+      params: {
+        eventid: slug
+      }
+      }).then(res => {
+        this.showEventDetail(res.data);
+    });
+  }
+
+  componentDidMount() {
+    this.getEventDetail();
+    // Check whether this user has joined or not this event
+    this.checkEvent();
   }
 
   joinEvent(){
@@ -81,8 +91,13 @@ class EventDetail extends Component {
         userid: this.state.userid
       }
       }).then(res => {
+        this.setState({
+          has_join_event: res.data === 'success'? 1: 0
+        });
         alert(res.data);
-      });
+    });
+    // get updated event detail
+    this.getEventDetail();
   }
 
   leaveEvent(){
@@ -92,8 +107,13 @@ class EventDetail extends Component {
         userid: this.state.userid
       }
       }).then(res => {
+        this.setState({
+          has_join_event: res.data === 'success'? 0: 1
+        });
         alert(res.data);
-      });
+    });
+    // get updated event detail
+    this.getEventDetail();
   }
 
   closeEvent(){
@@ -104,22 +124,27 @@ class EventDetail extends Component {
       }
       }).then(res => {
         alert(res.data);
-      });
+    });
+    // get updated event detail
+    this.getEventDetail();
   }
 
   showEventDetail(data) {
     var event_data = data.event;
     // console.log("Event Data = " + data.creatorname);
     // console.log("is log in id = " + this.state.userid);
-    var creator_content = this.state.is_creator
-      ? <Button onClick={this.closeEvent}>Close Event</Button>
-      : ''
-    var join_event_content = this.state.has_join_event
-      ? <Button onClick={this.leaveEvent}>Leave Event</Button>
-      : <Button onClick={this.joinEvent}>Join Event</Button>
     var user_event_content = this.state.is_creator
-      ? {creator_content}
-      : {join_event_content}
+      ? <Button onClick={this.closeEvent}>Close Event</Button>
+      : this.state.has_join_event
+        ? <Button onClick={this.leaveEvent}>Leave Event</Button>
+        : <Button onClick={this.joinEvent}>Join Event</Button>
+    // var creator_content = this.state.is_creator
+    //   ? <Button onClick={this.closeEvent}>Close Event</Button>
+    //   : ''
+    // var join_event_content = this.state.has_join_event
+    //   ? <Button onClick={this.leaveEvent}>Leave Event</Button>
+    //   : <Button onClick={this.joinEvent}>Join Event</Button>
+
 
     if (data === null || data.length === 0) {
       this.setState({
@@ -165,8 +190,11 @@ class EventDetail extends Component {
 
     return(
       <div>
-        <div className="React Eshop__nav-spacer" />
-        {posts}
+        <Col md={3}>
+        </Col>
+        <Col xs={12} md={9}>
+          {posts}
+        </Col>
       </div>
     );
   }

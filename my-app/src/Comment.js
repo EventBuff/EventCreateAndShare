@@ -69,7 +69,10 @@ class Comment extends Component {
 
 
     return(
+        <div>
+        This is comment
         {posts}
+        </div>
     );
   }
 
