@@ -26,7 +26,8 @@ class EventDetail extends Component {
       eventid: this.props.params.slug,
       userid: localStorage["userid"],
       has_join_event: 0,
-      is_creator: 0
+      is_creator: 0,
+      user_event_content: ''
     };
     this.showEventDetail = this.showEventDetail.bind(this)
     this.joinEvent = this.joinEvent.bind(this);
@@ -69,6 +70,8 @@ class EventDetail extends Component {
 
   getEventDetail(){
     const slug = this.props.params.slug;
+    console.log("get Event detail");
+    console.log("eventID = " +  this.state.eventid + " userID = " + this.state.userid);
     axios.get('/eventDetail', {
       params: {
         eventid: slug
@@ -79,9 +82,9 @@ class EventDetail extends Component {
   }
 
   componentDidMount() {
-    this.getEventDetail();
     // Check whether this user has joined or not this event
     this.checkEvent();
+    this.getEventDetail();
   }
 
   joinEvent(){
@@ -94,10 +97,13 @@ class EventDetail extends Component {
         this.setState({
           has_join_event: res.data === 'success'? 1: 0
         });
-        alert(res.data);
+    });
+    this.setState({
+      posts: ''
     });
     // get updated event detail
     this.getEventDetail();
+    alert("You have joined this event");
   }
 
   leaveEvent(){
@@ -110,10 +116,13 @@ class EventDetail extends Component {
         this.setState({
           has_join_event: res.data === 'success'? 0: 1
         });
-        alert(res.data);
+    });
+    this.setState({
+      posts: ''
     });
     // get updated event detail
     this.getEventDetail();
+    alert("You have left this event");
   }
 
   closeEvent(){
@@ -127,17 +136,22 @@ class EventDetail extends Component {
     });
     // get updated event detail
     this.getEventDetail();
+    alert("You have closed this event");
   }
 
   showEventDetail(data) {
     var event_data = data.event;
     // console.log("Event Data = " + data.creatorname);
     // console.log("is log in id = " + this.state.userid);
-    var user_event_content = this.state.is_creator
-      ? <Button onClick={this.closeEvent}>Close Event</Button>
-      : this.state.has_join_event
-        ? <Button onClick={this.leaveEvent}>Leave Event</Button>
-        : <Button onClick={this.joinEvent}>Join Event</Button>
+    this.setState({
+      user_event_content: this.state.is_creator
+       ? <Button onClick={this.closeEvent}>Close Event</Button>
+       : ( this.state.has_join_event
+         ? <Button onClick={this.leaveEvent}>Leave Event</Button>
+         : <Button onClick={this.joinEvent}>Join Event</Button>
+         )
+    });
+    var user_event_content = this.state.user_event_content;
     // var creator_content = this.state.is_creator
     //   ? <Button onClick={this.closeEvent}>Close Event</Button>
     //   : ''
@@ -151,6 +165,7 @@ class EventDetail extends Component {
           posts: ''
       });
     } else {
+      var close =  event_data.isclose === true?1:0;
       var content =
           <div>
             <h4><Link to={`/eventDetail/${event_data.eventid}`}> {event_data.eventtitle} </Link></h4>
@@ -158,11 +173,11 @@ class EventDetail extends Component {
             <p> {event_data.eventdescription} </p>
             <p> {event_data.starttime} </p>
             <p> {event_data.endtime} </p>
-            <p> {event_data.numofpeople} </p>
-            <p> {event_data.nownum} </p>
+            <p> numofpeople {event_data.numofpeople} </p>
+            <p> nownum {event_data.nownum} </p>
             <p> {event_data.eventphoto} </p>
             <p> {event_data.location} </p>
-            <p> {event_data.isclose} </p>
+            <p> isclose {close} </p>
             <p> {event_data.closereason} </p>
             <p> {data.creatorname} </p>
             {user_event_content}
