@@ -1,4 +1,4 @@
-package com.SpringBootTest.controller;
+package com.BackEnd.controller;
 
 import com.BackEnd.domain.Event;
 import com.BackEnd.domain.EventRepository;
@@ -33,8 +33,8 @@ public class LeaveEventController {
                 //if user is not creator
                 && eventRepository.findByEventid(eventid).getCreatorid() != userid){
             userEventRepository.deleteByEventidAndParticipantid(eventid, userid);
-            return "You leave the event successfully!";
+            return "success";
         }
-        else return "You cannot leave this event!";
+        else return "failure";
     }
 }
