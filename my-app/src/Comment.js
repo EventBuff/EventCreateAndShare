@@ -8,7 +8,6 @@
 import React, { Component } from 'react';
 import './Comment.css';
 import axios from 'axios';
-import { Link } from 'react-router';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
 
 class Comment extends Component {
@@ -25,7 +24,6 @@ class Comment extends Component {
     this.showPosts = this.showPosts.bind(this);
     this.getValidationState = this.getValidationState.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.getInitialState = this.getInitialState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -50,10 +48,6 @@ class Comment extends Component {
   }
 
   showPosts(data){
-    console.log(data);
-    data.map((x) => {
-      console.log(x);
-    });
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
@@ -65,18 +59,13 @@ class Comment extends Component {
             <p> {x.userid} </p>
           </div>
       );
-
+      // console.log(content);
       this.setState({
           posts: content
       });
     }
   }
 
-  getInitialState() {
-    return {
-      value: ''
-    };
-  }
 
   getValidationState() {
     const length = this.state.value.length;
@@ -90,16 +79,23 @@ class Comment extends Component {
   }
 
   handleSubmit(e){
+    axios.get('/eventDetail/makeComment', {
+        params: {
+          eventid: this.state.eventid,
+          userid: this.state.userid,
+          comment: this.state.value
+        }
+      }).then(res => {
+        this.showPosts(res.data);
+    });
     // console.log(e.target.value);
     console.log("The comment content is" + this.state.value);
     // The following will handle the make new comment ajax post request.
-
+    this.getCommentList();
   }
   render() {
     // console.log("props eventid = " + this.state.eventid);
-    var posts = this.state.postsCheckNum
-      ? this.state.posts
-      : '';
+    var posts = this.state.posts;
 
     var makecomment_content =
       <form>
