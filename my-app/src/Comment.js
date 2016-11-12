@@ -5,79 +5,125 @@
 * @Last Modified time: 2016-11-06 21:57:41
 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import './Comment.css';
 import axios from 'axios';
-import { Link } from 'react-router';
-import { Grid } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
 
 class Comment extends Component {
-  static propTypes = {
-    params: PropTypes.object.isRequired
-  }
-
   constructor(props) {
     super(props);
 
     this.state = {
       posts: '',
-      postsCheckNum: 0,
-      userid: localStorage["userid"]
+      value: '',
+      userid: localStorage["userid"],
+      eventid: this.props.eventid
     };
-    this.showCommentDetail = this.showCommentDetail.bind(this);
-
+    this.getCommentList = this.getCommentList.bind(this);
+    this.showPosts = this.showPosts.bind(this);
+    this.getValidationState = this.getValidationState.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
+    // this.setState({
+    //     eventid: this.props.eventid
+    // });
+  }
 
+  getCommentList(){
+    axios.get('/eventDetail/comment', {
+        params: {
+          eventid: this.state.eventid
+        }
+      }).then(res => {
+        this.showPosts(res.data);
+    });
   }
 
   componentDidMount() {
-    //
-    // axios.get('/eventDetail', {
-    //   params: {
-    //     eventid: slug
-    //   }
-    //   }).then(res => {
-    //     this.showEventDetail(res.data);
-    //   });
+    this.getCommentList();
   }
 
-  showCommentDetail(data) {
+  showPosts(data){
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
       });
     } else {
-      var content =
-          <div>
-            <h4><Link to={`/eventDetail/${data.eventid}`}> {data.eventtitle} </Link></h4>
-            <p> {data.eventtag} </p>
-            <p> {data.eventdescription} </p>
-          </div>;
+      var content = data.map((x) =>
+          <div key={x.commentid}>
+            <h4>{x.comment} </h4>
+            <p> {x.userid} </p>
+          </div>
+      );
+      // console.log(content);
       this.setState({
-          posts: content,
-          postsCheckNum: 1
+          posts: content
       });
     }
   }
 
-  render() {
-    console.log("props eventid " + this.props.eventid);
-    let detail =
-      <Grid>
-        <h2>We could not find that event.</h2>
-        <h3>Try searching or using the top navigation to find what you are looking for.</h3>
-      </Grid>;
-    var posts = this.state.postsCheckNum
-      ? this.state.posts
-      : detail;
 
+  getValidationState() {
+    const length = this.state.value.length;
+    if (length > 10) return 'success';
+    else if (length > 5) return 'warning';
+    else if (length > 0) return 'error';
+  }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+  }
+
+  handleSubmit(e){
+    axios.get('/eventDetail/makeComment', {
+        params: {
+          eventid: this.state.eventid,
+          userid: this.state.userid,
+          comment: this.state.value
+        }
+      }).then(res => {
+        console.log(res.data);
+    });
+    // console.log(e.target.value);
+    // console.log("The comment content is" + this.state.value);
+    // The following will handle the make new comment ajax post request.
+    this.getCommentList();
+  }
+  render() {
+    // console.log("props eventid = " + this.state.eventid);
+    var posts = this.state.posts;
+
+    var makecomment_content =
+      <form>
+          <FormGroup
+            controlId="formBasicText"
+            validationState={this.getValidationState()}
+          >
+            <ControlLabel>Making New Comments</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.value}
+              placeholder="Enter text"
+              onChange={this.handleChange}
+            />
+            <FormControl.Feedback />
+            <HelpBlock>The length of a comment should be large than 10.</HelpBlock>
+            <Button type="submit" onClick={this.handleSubmit}>
+              Submit
+            </Button>
+          </FormGroup>
+        </form>
 
     return(
-      <div>
-        {posts}
-      </div>
+        <div>
+        This is comment
+          {posts}
+          {makecomment_content}
+        </div>
     );
   }
 
