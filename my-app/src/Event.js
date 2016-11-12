@@ -28,7 +28,7 @@ class Event extends Component {
     this.searchEvent = this.searchEvent.bind(this);
     this.showPosts = this.showPosts.bind(this);
   }
-  
+
   myFunction(){
     axios.get('/searchEvent', {
         // name: 2
@@ -67,23 +67,21 @@ class Event extends Component {
 
   showPosts(data){
     if (data === null || data.length === 0) {
-      this.setState({ 
+      this.setState({
           posts: ''
       });
     } else {
       var content = data.map((x) =>
           <div key={x.eventid}>
             <h4><Link to={`/eventDetail/${x.eventid}`}> {x.eventtitle} </Link></h4>
-            <p> {x.eventdescription} </p>  
+            <p> {x.eventdescription} </p>
           </div>
       );
-      
-      this.setState({ 
+
+      this.setState({
           posts: content
       });
     }
-    
-    
   }
 
   render() {

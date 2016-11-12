@@ -112,7 +112,6 @@ class EventDetail extends Component {
         userid: this.state.userid
       }
       }).then(res => {
-        alert(res.data);
         this.setState({
           has_join_event: res.data === 'success'? 0: 1
         });

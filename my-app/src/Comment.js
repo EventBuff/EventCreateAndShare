@@ -5,11 +5,11 @@
 * @Last Modified time: 2016-11-06 21:57:41
 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import './Comment.css';
 import axios from 'axios';
 import { Link } from 'react-router';
-import { Grid } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
 
 class Comment extends Component {
   constructor(props) {
@@ -17,12 +17,16 @@ class Comment extends Component {
 
     this.state = {
       posts: '',
-      postsCheckNum: 0,
+      value: '',
       userid: localStorage["userid"],
       eventid: this.props.eventid
     };
-    this.showCommentDetail = this.showCommentDetail.bind(this);
-
+    this.getCommentList = this.getCommentList.bind(this);
+    this.showPosts = this.showPosts.bind(this);
+    this.getValidationState = this.getValidationState.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.getInitialState = this.getInitialState.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
@@ -31,47 +35,97 @@ class Comment extends Component {
     // });
   }
 
-  componentDidMount() {
-    //
-    // axios.get('/eventDetail', {
-    //   params: {
-    //     eventid: slug
-    //   }
-    //   }).then(res => {
-    //     this.showEventDetail(res.data);
-    //   });
+  getCommentList(){
+    axios.get('/searchEvent', {
+        params: {
+          eventid: this.state.value
+        }
+      }).then(res => {
+        this.showPosts(res.data);
+    });
   }
 
-  showCommentDetail(data) {
+  componentDidMount() {
+    this.getCommentList();
+  }
+
+  showPosts(data){
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
       });
     } else {
-      var content =
-          <div>
-            <h4></h4>
-            <p>  </p>
-            <p>  </p>
-          </div>;
+      var content = data.map((x) =>
+          <div key={x.eventid}>
+            <h4><Link to={`/eventDetail/${x.eventid}`}> {x.eventtitle} </Link></h4>
+            <p> {x.eventdescription} </p>
+          </div>
+      );
+
       this.setState({
-          posts: content,
-          postsCheckNum: 1
+          posts: content
       });
     }
   }
 
+  getInitialState() {
+    return {
+      value: ''
+    };
+  }
+
+  getValidationState() {
+    const length = this.state.value.length;
+    if (length > 10) return 'success';
+    else if (length > 5) return 'warning';
+    else if (length > 0) return 'error';
+  }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+  }
+
+  handleSubmit(e){
+    // console.log(e.target.value);
+    console.log("The comment content is" + this.state.value);
+    // The following will handle the make new comment ajax post request.
+
+  }
   render() {
-    console.log("props eventid = " + this.state.eventid);
+    // console.log("props eventid = " + this.state.eventid);
     var posts = this.state.postsCheckNum
       ? this.state.posts
       : '';
 
+    var makecomment_content =
+      <form>
+          <FormGroup
+            controlId="formBasicText"
+            validationState={this.getValidationState()}
+          >
+            <ControlLabel>Making New Comments</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.value}
+              placeholder="Enter text"
+              onChange={this.handleChange}
+            />
+            <FormControl.Feedback />
+            <HelpBlock>The length of a comment should be large than 10.</HelpBlock>
+            <Button type="submit">
+              Submit
+            </Button>
+            <Button onClick={this.handleSubmit}>
+              handleSubmit
+            </Button>
+          </FormGroup>
+        </form>
 
     return(
         <div>
         This is comment
-        {posts}
+          {posts}
+          {makecomment_content}
         </div>
     );
   }

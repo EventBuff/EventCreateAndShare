@@ -9,7 +9,7 @@ import React, { Component, PropTypes } from 'react';
 import './CreateEvent.css';
 import axios from 'axios';
 import { Link } from 'react-router';
-import { Grid } from 'react-bootstrap';
+// import { Grid } from 'react-bootstrap';
 
 // Need update for the api
 class CreateEvent extends Component {
