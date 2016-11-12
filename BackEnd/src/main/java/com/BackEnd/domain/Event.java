@@ -59,7 +59,7 @@ public class Event {
 
     public Event(String eventtitle, Timestamp starttime, Timestamp endtime,
                  String eventdescription, Integer numofpeople, Integer nownum, String eventtag,
-                 String eventphoto, String location, Boolean isclose){
+                 Integer creatorid, String eventphoto, String location, Boolean isclose){
         this.eventtitle = eventtitle;
         this.starttime = starttime;
         this.endtime = endtime;
@@ -67,6 +67,7 @@ public class Event {
         this.numofpeople = numofpeople;
         this.nownum = nownum;
         this.eventtag = eventtag;
+        this.creatorid = creatorid;
         this.eventphoto = eventphoto;
         this.location = location;
         this.isclose = isclose;
@@ -74,7 +75,8 @@ public class Event {
 
     public Event(String eventtitle, Timestamp starttime, Timestamp endtime,
                  String eventdescription, Integer numofpeople, Integer nownum, String eventtag,
-                 String eventphoto, String location, Boolean isclose, String closereason){
+                 Integer creatorid, String eventphoto, String location, Boolean isclose,
+                 String closereason){
         this.eventtitle = eventtitle;
         this.starttime = starttime;
         this.endtime = endtime;
@@ -82,6 +84,7 @@ public class Event {
         this.numofpeople = numofpeople;
         this.nownum = nownum;
         this.eventtag = eventtag;
+        this.creatorid = creatorid;
         this.eventphoto = eventphoto;
         this.location = location;
         this.isclose = isclose;

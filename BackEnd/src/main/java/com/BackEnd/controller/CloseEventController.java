@@ -31,8 +31,8 @@ public class CloseEventController {
             eventRepository.findByEventid(eventid).setIsclose(true);
             //delete participants
             userEventRepository.delete(eventid);
-            return "This event is closed!";
+            return "success";
         }
-        else return "You cannot close this event!";
+        else return "failure";
     }
 }
