@@ -10,6 +10,7 @@ import Event from './Event';
 import EventDetail from './EventDetail';
 import Profile from './Profile';
 import Login from './Login';
+import CreateEvent from './CreateEvent';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
@@ -22,6 +23,7 @@ const routes =
     <Route path='/event' component={Event} />
     <Route path='/eventDetail/:slug' component={EventDetail} />
     <Route path='/profile/:slug' component={Profile} />
+    <Route path='/CreateEvent' component={CreateEvent} />
     <Route path='/login' component={Login} />
     <Route path='*' component={NotFound} />
   </Route>

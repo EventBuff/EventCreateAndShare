@@ -5,13 +5,14 @@
 * @Last Modified time: 2016-11-09 17:20:28
 */
 
-import React, { Component } from 'react';
+import React, { Component, getDOMNode } from 'react';
 // import logo from './logo.svg';
 import './Login.css';
 // import Navigation from './Navigation';
 import axios from 'axios';
 import { OverlayTrigger, Tooltip, Popover, Modal, Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
   from 'react-bootstrap';
+import ReactDom from 'react-dom';
 // import { Link } from 'react-router';
 
 class Login extends Component {
@@ -70,21 +71,34 @@ class Login extends Component {
     }
   }
 
+
   handleClick(){
-    console.log("value: " + this.state.email + this.state.password);
+    var log_email = ReactDom.findDOMNode(this.refs.log_email).value;
+    var log_password = ReactDom.findDOMNode(this.refs.log_password).value;
+    console.log("value: " + log_email + log_password);
     axios.get('/login', {
         params: {
-          email: this.state.email,
-          password: this.state.password
+          email: log_email,
+          password: log_password
         }
       }).then(res => {
+        console.log(res.data);
         this.showProfile(res.data);
       });
-
   }
 
+  // need to add ajax to create account
   handleSubmit(){
     console.log("click sign up");
+    var sign_email = ReactDom.findDOMNode(this.refs.email).value;
+    var sign_username = ReactDom.findDOMNode(this.refs.username).value;
+    var sign_password = ReactDom.findDOMNode(this.refs.password).value;
+    var sign_repassword = ReactDom.findDOMNode(this.refs.repassword).value;
+    if (sign_password !== sign_repassword){
+      alert("password not same");
+    }
+    console.log(sign_username);
+    console.log(sign_password);
   }
 
   render() {
@@ -97,16 +111,7 @@ class Login extends Component {
         </FormGroup>
       );
     }
-    const popover = (
-      <Popover id="modal-popover" title="popover">
-        very popover. such engagement
-      </Popover>
-    );
-    const tooltip = (
-      <Tooltip id="modal-tooltip">
-        wow.
-      </Tooltip>
-    );
+
     var signContent =
       <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
@@ -114,32 +119,43 @@ class Login extends Component {
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={this.handleSubmit}>
-              <FieldGroup
-                id="formControlsEmail"
-                type="email"
-                label="Email Address"
-                placeholder="Enter Email"
-              />
-              <FieldGroup
-                id="formControlsUserName"
-                type="text"
-                label="User Name"
-                placeholder="User Name"
-              />
-              <FieldGroup
-                id="formControlsPassword"
-                type="Password"
-                label="Password"
-                placeholder="Enter Password"
-              />
-              <FieldGroup
-                id="formControlsRePassword"
-                type="Password"
-                label="Re Password"
-                placeholder="ReEnter Password"
-              />
+              <FormGroup>
+                <ControlLabel>Email Address</ControlLabel>
+                <FormControl
+                  type="email"
+                  placeholder="abcd1234@colorado.edu"
+                  ref="email"
+                />
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>User Name</ControlLabel>
+                <FormControl
+                  type="text"
+                  placeholder="User Name"
+                  ref="username"
+                />
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Password</ControlLabel>
+                <FormControl
+                  type="Password"
+                  placeholder="Password"
+                  ref="password"
+                />
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Repeat Password</ControlLabel>
+                <FormControl
+                  type="Password"
+                  placeholder="Repeat Password"
+                  ref="repassword"
+                />
+              </FormGroup>
               <Button type="submit">
                 Submit
+              </Button>
+              <Button onClick={this.handleSubmit}>
+                handleSubmit
               </Button>
             </form>
             </Modal.Body>
@@ -158,7 +174,7 @@ class Login extends Component {
         Email
       </Col>
       <Col sm={10}>
-        <FormControl type="email" placeholder="Email" />
+        <FormControl type="email" placeholder="Email" ref="log_email"/>
       </Col>
     </FormGroup>
 
@@ -167,7 +183,7 @@ class Login extends Component {
         Password
       </Col>
       <Col sm={10}>
-        <FormControl type="password" placeholder="Password" />
+        <FormControl type="password" placeholder="Password" ref="log_password"/>
       </Col>
     </FormGroup>
 
