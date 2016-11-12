@@ -47,8 +47,8 @@ class EventDetail extends Component {
   }
 
   showEventDetail(data) {
-    console.log(data);
-    console.log("is log in" + this.state.userid);
+    console.log("Event Data = " + data);
+    console.log("is log in id = " + this.state.userid);
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
@@ -59,7 +59,8 @@ class EventDetail extends Component {
             <h4><Link to={`/eventDetail/${data.eventid}`}> {data.eventtitle} </Link></h4>
             <p> {data.eventtag} </p>
             <p> {data.eventdescription} </p>
-          </div>;
+            <Comment eventid={this.state.eventid}/>
+          </div>
       this.setState({
           posts: content,
           postsCheckNum: 1
@@ -80,9 +81,8 @@ class EventDetail extends Component {
 
     return(
       <div>
-        <div className="ReactEshop__nav-spacer" />
+        <div className="React Eshop__nav-spacer" />
         {posts}
-        <Comment eventid={this.state.eventid}/>
       </div>
     );
   }

@@ -23,27 +23,16 @@ class CreateEvent extends Component {
     this.state = {
       posts: '',
       postsCheckNum: 0,
-      eventid: this.props.params.slug,
       userid: localStorage["userid"]
     };
     this.showEventDetail = this.showEventDetail.bind(this)
-
   }
 
   componentWillMount() {
-    const slug = this.props.params.slug;
-    console.log(slug);
   }
 
   componentDidMount() {
-    const slug = this.props.params.slug;
-    axios.get('/eventDetail', {
-      params: {
-        eventid: slug
-      }
-      }).then(res => {
-        this.showEventDetail(res.data);
-      });
+
   }
 
   showEventDetail(data) {
@@ -68,19 +57,11 @@ class CreateEvent extends Component {
   }
 
   render() {
-    let detail =
-      <Grid>
-        <h2>We could not find that event.</h2>
-        <h3>Try searching or using the top navigation to find what you are looking for.</h3>
-      </Grid>;
-    var posts = this.state.postsCheckNum
-      ? this.state.posts
-      : detail;
+    var posts = this.state.posts
 
 
     return(
       <div>
-        <div className="ReactEshop__nav-spacer" />
         {posts}
       </div>
     );

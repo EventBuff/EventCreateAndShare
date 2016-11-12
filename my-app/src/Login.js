@@ -5,12 +5,12 @@
 * @Last Modified time: 2016-11-09 17:20:28
 */
 
-import React, { Component, getDOMNode } from 'react';
+import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './Login.css';
 // import Navigation from './Navigation';
 import axios from 'axios';
-import { OverlayTrigger, Tooltip, Popover, Modal, Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
+import { HelpBlock, Modal, Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
   from 'react-bootstrap';
 import ReactDom from 'react-dom';
 // import { Link } from 'react-router';
@@ -102,16 +102,6 @@ class Login extends Component {
   }
 
   render() {
-    function FieldGroup({ id, label, help, ...props }) {
-      return (
-        <FormGroup controlId={id}>
-          <ControlLabel>{label}</ControlLabel>
-          <FormControl {...props} />
-          {help && <HelpBlock>{help}</HelpBlock>}
-        </FormGroup>
-      );
-    }
-
     var signContent =
       <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
@@ -126,6 +116,7 @@ class Login extends Component {
                   placeholder="abcd1234@colorado.edu"
                   ref="email"
                 />
+                <HelpBlock>Enter the colorado email address</HelpBlock>
               </FormGroup>
               <FormGroup>
                 <ControlLabel>User Name</ControlLabel>
