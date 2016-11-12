@@ -51,13 +51,15 @@ class Comment extends Component {
 
   showPosts(data){
     console.log(data);
+    data.map((x) => {
+      console.log(x);
+    });
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
       });
     } else {
       var content = data.map((x) =>
-          console.log(x);
           <div key={x.commentid}>
             <h4>{x.comment} </h4>
             <p> {x.userid} </p>
