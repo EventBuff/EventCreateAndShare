@@ -2,6 +2,7 @@ package com.BackEnd.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 /**
  * Created by yanli on 10/30/16.
@@ -9,6 +10,9 @@ import javax.persistence.Id;
 @Entity
 public class EventEquipment {
     @Id
+    @GeneratedValue
+    private Integer eventequipmentid;
+
     @Column(nullable = false)
     private Integer eventid;
 
@@ -20,6 +24,14 @@ public class EventEquipment {
     public EventEquipment(Integer eventid, Integer equipmentid){
         this.eventid = eventid;
         this.equipmentid = equipmentid;
+    }
+
+    public Integer getEventequipmentid() {
+        return eventequipmentid;
+    }
+
+    public void setEventequipmentid(Integer eventequipmentid) {
+        this.eventequipmentid = eventequipmentid;
     }
 
     public Integer getEventid() {
