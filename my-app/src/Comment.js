@@ -86,10 +86,10 @@ class Comment extends Component {
           comment: this.state.value
         }
       }).then(res => {
-        this.showPosts(res.data);
+        console.log(res.data);
     });
     // console.log(e.target.value);
-    console.log("The comment content is" + this.state.value);
+    // console.log("The comment content is" + this.state.value);
     // The following will handle the make new comment ajax post request.
     this.getCommentList();
   }
@@ -112,11 +112,8 @@ class Comment extends Component {
             />
             <FormControl.Feedback />
             <HelpBlock>The length of a comment should be large than 10.</HelpBlock>
-            <Button type="submit">
+            <Button type="submit" onClick={this.handleSubmit}>
               Submit
-            </Button>
-            <Button onClick={this.handleSubmit}>
-              handleSubmit
             </Button>
           </FormGroup>
         </form>

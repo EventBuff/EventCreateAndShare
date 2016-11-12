@@ -26,7 +26,8 @@ class EventDetail extends Component {
       eventid: this.props.params.slug,
       userid: localStorage["userid"],
       has_join_event: 0,
-      is_creator: 0
+      is_creator: 0,
+      user_event_content: ''
     };
     this.showEventDetail = this.showEventDetail.bind(this)
     this.joinEvent = this.joinEvent.bind(this);
@@ -142,12 +143,15 @@ class EventDetail extends Component {
     var event_data = data.event;
     // console.log("Event Data = " + data.creatorname);
     // console.log("is log in id = " + this.state.userid);
-    var user_event_content = this.state.is_creator
-      ? <Button onClick={this.closeEvent}>Close Event</Button>
-      : ( this.state.has_join_event
-        ? <Button onClick={this.leaveEvent}>Leave Event</Button>
-        : <Button onClick={this.joinEvent}>Join Event</Button>
-        )
+    this.setState({
+      user_event_content: this.state.is_creator
+       ? <Button onClick={this.closeEvent}>Close Event</Button>
+       : ( this.state.has_join_event
+         ? <Button onClick={this.leaveEvent}>Leave Event</Button>
+         : <Button onClick={this.joinEvent}>Join Event</Button>
+         )
+    });
+    var user_event_content = this.state.user_event_content;
     // var creator_content = this.state.is_creator
     //   ? <Button onClick={this.closeEvent}>Close Event</Button>
     //   : ''
