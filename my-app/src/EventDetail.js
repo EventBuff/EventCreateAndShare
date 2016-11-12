@@ -108,8 +108,9 @@ class EventDetail extends Component {
   }
 
   showEventDetail(data) {
-    console.log("Event Data = " + data);
-    console.log("is log in id = " + this.state.userid);
+    var event_data = data.event;
+    // console.log("Event Data = " + data.creatorname);
+    // console.log("is log in id = " + this.state.userid);
     var creator_content = this.state.is_creator
       ? <Button onClick={this.closeEvent}>Close Event</Button>
       : ''
@@ -127,11 +128,22 @@ class EventDetail extends Component {
     } else {
       var content =
           <div>
-            <h4><Link to={`/eventDetail/${data.eventid}`}> {data.eventtitle} </Link></h4>
-            <p> {data.eventtag} </p>
-            <p> {data.eventdescription} </p>
+            <h4><Link to={`/eventDetail/${event_data.eventid}`}> {event_data.eventtitle} </Link></h4>
+            <p> {event_data.eventtag} </p>
+            <p> {event_data.eventdescription} </p>
+            <p> {event_data.starttime} </p>
+            <p> {event_data.endtime} </p>
+            <p> {event_data.numofpeople} </p>
+            <p> {event_data.nownum} </p>
+            <p> {event_data.eventphoto} </p>
+            <p> {event_data.location} </p>
+            <p> {event_data.isclose} </p>
+            <p> {event_data.closereason} </p>
+            <p> {data.creatorname} </p>
             {user_event_content}
+            <div>
             <Comment eventid={this.state.eventid}/>
+            </div>
           </div>
       this.setState({
           posts: content,

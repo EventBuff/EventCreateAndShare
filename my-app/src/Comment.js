@@ -12,10 +12,6 @@ import { Link } from 'react-router';
 import { Grid } from 'react-bootstrap';
 
 class Comment extends Component {
-  static propTypes = {
-    params: PropTypes.object.isRequired
-  }
-
   constructor(props) {
     super(props);
 
@@ -73,9 +69,7 @@ class Comment extends Component {
 
 
     return(
-      <div>
         {posts}
-      </div>
     );
   }
 
