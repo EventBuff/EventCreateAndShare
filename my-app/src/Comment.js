@@ -36,9 +36,9 @@ class Comment extends Component {
   }
 
   getCommentList(){
-    axios.get('/searchEvent', {
+    axios.get('/eventDetail/comment', {
         params: {
-          eventid: this.state.value
+          eventid: this.state.eventid
         }
       }).then(res => {
         this.showPosts(res.data);
@@ -50,15 +50,17 @@ class Comment extends Component {
   }
 
   showPosts(data){
+    console.log(data);
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
       });
     } else {
       var content = data.map((x) =>
-          <div key={x.eventid}>
-            <h4><Link to={`/eventDetail/${x.eventid}`}> {x.eventtitle} </Link></h4>
-            <p> {x.eventdescription} </p>
+          console.log(x);
+          <div key={x.commentid}>
+            <h4>{x.comment} </h4>
+            <p> {x.userid} </p>
           </div>
       );
 

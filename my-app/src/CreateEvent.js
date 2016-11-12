@@ -58,8 +58,6 @@ class CreateEvent extends Component {
 
   render() {
     var posts = this.state.posts
-
-
     return(
       <div>
         {posts}
