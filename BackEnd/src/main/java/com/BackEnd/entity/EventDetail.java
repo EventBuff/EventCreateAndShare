@@ -1,8 +1,9 @@
-package com.BackEnd.controller;
+package com.BackEnd.entity;
 
 import com.BackEnd.domain.Event;
+
 /**
- * Created by yanli on 11/7/16.
+ * Created by yanli on 11/11/16.
  */
 public class EventDetail {
     private final Event event;

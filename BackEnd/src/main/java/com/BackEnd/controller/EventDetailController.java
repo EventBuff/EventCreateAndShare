@@ -1,6 +1,7 @@
 package com.BackEnd.controller;
 
 import com.BackEnd.domain.Event;
+import com.BackEnd.entity.EventDetail;
 import com.BackEnd.domain.EventRepository;
 import com.BackEnd.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
