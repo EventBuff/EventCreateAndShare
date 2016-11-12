@@ -10,7 +10,7 @@ import './EventDetail.css';
 import Comment from './Comment';
 import axios from 'axios';
 import { Link } from 'react-router';
-import { Grid } from 'react-bootstrap';
+import { Button, Grid } from 'react-bootstrap';
 
 class EventDetail extends Component {
   static propTypes = {
@@ -25,11 +25,13 @@ class EventDetail extends Component {
       postsCheckNum: 0,
       eventid: this.props.params.slug,
       userid: localStorage["userid"],
-      has_join_event: 0
+      has_join_event: 0,
+      is_creator: 0
     };
     this.showEventDetail = this.showEventDetail.bind(this)
-    this.joinEvent = ths.joinEvent.bind(this);
+    this.joinEvent = this.joinEvent.bind(this);
     this.leaveEvent = this.leaveEvent.bind(this);
+    this.closeEvent = this.closeEvent.bind(this);
   }
 
   componentWillMount() {
@@ -53,8 +55,20 @@ class EventDetail extends Component {
         userid: this.state.userid
       }
       }).then(res => {
+        console.log(res.data);
+        var is_creator = 0;
+        var has_join_event = 0;
+        if (res.data === 'creator'){
+          is_creator = 1;
+          has_join_event = 1;
+        }else if (res.data === 'participant'){
+          has_join_event = 1;
+        }else{
+          has_join_event = 0
+        }
         this.setState({
-            has_join_event: res.data == 'success'? 1 : 0;
+          is_creator: is_creator,
+          has_join_event: has_join_event
         });
         alert(res.data);
       });
@@ -82,12 +96,29 @@ class EventDetail extends Component {
       });
   }
 
+  closeEvent(){
+    axios.get('/eventDetail/close', {
+      params: {
+        eventid: this.state.eventid,
+        userid: this.state.userid
+      }
+      }).then(res => {
+        alert(res.data);
+      });
+  }
+
   showEventDetail(data) {
     console.log("Event Data = " + data);
     console.log("is log in id = " + this.state.userid);
-    var has_join_event_content = this.state.has_join_event
+    var creator_content = this.state.is_creator
+      ? <Button onClick={this.closeEvent}>Close Event</Button>
+      : ''
+    var join_event_content = this.state.has_join_event
       ? <Button onClick={this.leaveEvent}>Leave Event</Button>
       : <Button onClick={this.joinEvent}>Join Event</Button>
+    var user_event_content = this.state.is_creator
+      ? {creator_content}
+      : {join_event_content}
 
     if (data === null || data.length === 0) {
       this.setState({
@@ -99,7 +130,7 @@ class EventDetail extends Component {
             <h4><Link to={`/eventDetail/${data.eventid}`}> {data.eventtitle} </Link></h4>
             <p> {data.eventtag} </p>
             <p> {data.eventdescription} </p>
-            {has_join_event_content}
+            {user_event_content}
             <Comment eventid={this.state.eventid}/>
           </div>
       this.setState({
