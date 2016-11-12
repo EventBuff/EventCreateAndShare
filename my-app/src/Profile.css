@@ -6,5 +6,12 @@
 */
 
 .ProfileNavigation {
-  text-align: center; 
+  text-align: center;
+}
+
+button.active.list-group-item {
+  text-align: center;
+}
+button.album.list-group-item {
+  text-align: center;
 }

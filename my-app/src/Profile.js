@@ -22,21 +22,25 @@ class Profile extends Component {
     this.state = {
       posts: '',
       postsCheckNum: 0,
-      profileData: {}
+      profileData: {},
+      check_class: 'active',
+      event_class: 'album',
+      edit_class: 'album'
     };
     this.checkProfile = this.checkProfile.bind(this);
     this.showProfile = this.showProfile.bind(this);
     this.editProfile = this.editProfile.bind(this);
     this.showEditProfile = this.showEditProfile.bind(this);
   }
-  
 
-  checkProfile(){ 
+
+  checkProfile(){
+    this.setState({'check_class': 'active', event_class: 'album', edit_class: 'album'})
     const slug = this.props.params.slug;
     console.log("for userid " + slug);
     axios.get('/profile', {
       params: {
-        userid: slug  
+        userid: slug
       }
       }).then(res => {
         this.showProfile(res.data);
@@ -53,11 +57,11 @@ class Profile extends Component {
     })
     console.log(data);
     if (data === null || data.length === 0) {
-      this.setState({ 
+      this.setState({
           posts: ''
       });
     } else {
-      var content = 
+      var content =
           <div>
             <h4> {data.email} </h4>
             <p> {data.gender} </p>
@@ -65,29 +69,29 @@ class Profile extends Component {
             <p> {data.lastname} </p>
             <p> {data.phonenumber} </p>
           </div>;
-      this.setState({ 
+      this.setState({
           posts: content,
           postsCheckNum: 1
       });
     }
   }
 
-  editProfile(){ 
+  editProfile(){
+    this.setState({'check_class': 'album', event_class: 'album', edit_class: 'active'})
     this.showEditProfile(this.state.profileData);
     console.log(this.state.profileData);
     var data = JSON.parse(this.state.profileData);
     console.log(data)
-    
   }
 
   showEditProfile(data) {
-    
+
     if (data === null || data.length === 0) {
-      this.setState({ 
+      this.setState({
           posts: ''
       });
     } else {
-      var content = 
+      var content =
           <div>
             <h4> {data.email} </h4>
             <p> {data.gender} </p>
@@ -95,7 +99,7 @@ class Profile extends Component {
             <p> {data.lastname} </p>
             <p> {data.phonenumber} </p>
           </div>;
-      this.setState({ 
+      this.setState({
           posts: content,
           postsCheckNum: 1
       });
@@ -113,10 +117,10 @@ class Profile extends Component {
             <Col className="ProfileNavigation" xs={12} md={3}>
               <p> Profile </p>
               <ListGroup>
-                <ListGroupItem className='active' onClick={this.checkProfile}>Check Profile</ListGroupItem>
-                <ListGroupItem onClick={this.eventHistory}>Event History</ListGroupItem>
-                <ListGroupItem className='active' onClick={this.editProfile}>Edit Profile</ListGroupItem>
-              </ListGroup>  
+                <ListGroupItem className={this.state.check_class} onClick={this.checkProfile}>Check Profile</ListGroupItem>
+                <ListGroupItem className={this.state.event_class} onClick={this.eventHistory}>Event History</ListGroupItem>
+                <ListGroupItem className={this.state.edit_class} onClick={this.editProfile}>Edit Profile</ListGroupItem>
+              </ListGroup>
             </Col>
             <Col md={9}>
               {posts}
