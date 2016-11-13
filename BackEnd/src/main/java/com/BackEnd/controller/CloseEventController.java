@@ -30,7 +30,7 @@ public class CloseEventController {
             //set isClose true
             eventRepository.findByEventid(eventid).setIsclose(true);
             //delete participants
-            userEventRepository.delete(eventid);
+            userEventRepository.deleteByEventid(eventid);
             return "success";
         }
         else return "failure";
