@@ -17,6 +17,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     Event findByEventid(Integer eventid);
     Event findByEventtitle(String eventtitle);
     List<Event> findByEventtag(String eventtag);
+    List<Event> findByCreatorid(Integer creatorid);
 
     //change
     //eventtitle
