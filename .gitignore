@@ -1,6 +1,11 @@
+<<<<<<< HEAD
+.idea/
+
+=======
 
 .idea/
 *.iml
+>>>>>>> master
 ## Target Files
 BackEnd/target/
 
@@ -9,7 +14,7 @@ BackEnd/.idea/
 
 ### Java ###
 *.class
-
+*.iml
 
 
 
