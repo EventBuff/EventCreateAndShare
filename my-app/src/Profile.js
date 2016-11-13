@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:56:58
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-09 17:21:33
+* @Last Modified time: 2016-11-12 19:37:24
 */
 
 
@@ -25,12 +25,15 @@ class Profile extends Component {
       profileData: {},
       check_class: 'active',
       event_class: 'album',
-      edit_class: 'album'
+      edit_class: 'album',
+      userid: ''
     };
     this.checkProfile = this.checkProfile.bind(this);
     this.showProfile = this.showProfile.bind(this);
     this.editProfile = this.editProfile.bind(this);
     this.showEditProfile = this.showEditProfile.bind(this);
+    this.showEventHistory = this.showEventHistory.bind(this);
+    this.eventHistory = this.eventHistory.bind(this);
   }
 
 
@@ -49,6 +52,9 @@ class Profile extends Component {
 
   componentDidMount() {
     this.checkProfile();
+    this.setState({
+      userid: this.props.params.slug
+    });
   }
 
   showProfile(data) {
@@ -104,6 +110,23 @@ class Profile extends Component {
           postsCheckNum: 1
       });
     }
+  }
+
+  eventHistory(){
+    this.setState({'check_class': 'album', event_class: 'active', edit_class: 'album'})
+    // to get event history in userid
+    axios.get('/profile', {
+      params: {
+        userid: this.state.userid
+      }
+      }).then(res => {
+        this.showProfile(res.data);
+    });
+    this.showEventHistory();
+  }
+
+  showEventHistory(){
+
   }
 
   render() {
