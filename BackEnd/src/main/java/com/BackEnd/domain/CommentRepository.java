@@ -17,6 +17,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     //query_analysis
     List<Comment> findByUserid(Integer userid);
     List<Comment> findByEventid(Integer eventid);
+    Comment findByCommentid(Integer commentid);
     Comment findByUseridAndEventid(Integer userid, Integer eventid);
 
     //change
