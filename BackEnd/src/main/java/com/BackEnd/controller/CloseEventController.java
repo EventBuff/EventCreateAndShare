@@ -22,7 +22,7 @@ public class CloseEventController {
     private UserRepository userRepository;
 
     @RequestMapping("/eventDetail/close")
-    public String closerEvent(Integer eventid, Integer userid){
+    public String closeEvent(Integer eventid, Integer userid){
         //if event and user exist
         if(eventRepository.findByEventid(eventid) != null && userRepository.findByUserid(userid) !=null
                 //if user is creator
