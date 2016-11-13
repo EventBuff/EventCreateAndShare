@@ -50,6 +50,23 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query("update Event eve set eve.eventtag = ?1 where eve.eventid = ?2")
     int setFixedEventtagFor(@Param("eventtag") String eventtag , @Param("eventid") Integer eventid);
 
+    //isclose
+    @Modifying
+    @Transactional
+    @Query("update Event eve set eve.isclose = ?1 where eve.eventid = ?2")
+    int setFixedIscloseFor(@Param("isclose") Boolean isclose , @Param("eventid") Integer eventid);
+
+    //closereason
+    @Modifying
+    @Transactional
+    @Query("update Event eve set eve.closereason = ?1 where eve.eventid = ?2")
+    int setFixedClosereasonFor(@Param("closereason") String closereason , @Param("eventid") Integer eventid);
+
+    //nownum
+    @Modifying
+    @Transactional
+    @Query("update Event eve set eve.closereason = ?1 where eve.eventid = ?2")
+    int setFixedNownumFor(@Param("nownum") Integer nownum , @Param("eventid") Integer eventid);
     //insert: save
 
     //delete: delete

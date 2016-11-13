@@ -22,13 +22,14 @@ public class CloseEventController {
     private UserRepository userRepository;
 
     @RequestMapping("/eventDetail/close")
-    public String closeEvent(Integer eventid, Integer userid){
+    public String closeEvent(Integer eventid, Integer userid, String closereason){
         //if event and user exist
         if(eventRepository.findByEventid(eventid) != null && userRepository.findByUserid(userid) !=null
                 //if user is creator
                 && eventRepository.findByEventid(eventid).getCreatorid() == userid){
             //set isClose true
-            eventRepository.findByEventid(eventid).setIsclose(true);
+            eventRepository.setFixedIscloseFor(true, eventid);
+            eventRepository.setFixedClosereasonFor(closereason, eventid);
             //delete participants
             userEventRepository.deleteByEventid(eventid);
             return "success";

@@ -29,10 +29,14 @@ public class JoinEventController {
                  //if this event is not closed
                  && eventRepository.findByEventid(eventid).getIsclose() == false
                  //if user is not the creator
-                 && eventRepository.findByEventid(eventid).getCreatorid() != userid){
+                 && eventRepository.findByEventid(eventid).getCreatorid() != userid
+                 //if the event is not full
+                 && eventRepository.findByEventid(eventid).getNownum() < eventRepository.findByEventid(eventid).getNumofpeople()){
              //if it has joined this event, just return else save then return
              if(userEventRepository.findByEventidAndParticipantid(eventid, userid) == null) {
                  userEventRepository.save(new com.BackEnd.domain.UserEvent(eventid, userid));
+                 //nownum +1
+                 //eventRepository.setFixedNownumFor(5, eventid);
              }
              return "success";
         }
