@@ -76,6 +76,12 @@
 	font-style: italic;
 }
 
+/*image size for event */
+.event_image {
+	border-image-width: 5px;
+	width: 250px;
+	height: 200px;
+}
 
 .sample {
 	position:absolute;
