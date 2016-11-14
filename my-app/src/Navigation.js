@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 14:58:09
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-14 11:27:41
+* @Last Modified time: 2016-11-14 11:31:39
 */
 
 /*
@@ -69,8 +69,11 @@ class Navigation extends Component {
  
   logout(){
     localStorage.setItem("userid", '');
+    localStorage.setItem("isadmin", '');
+    
     this.setState({
-      userid: ''
+      userid: '',
+      isadmin: ''
     });
     window.location.href='/';
   }

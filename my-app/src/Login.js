@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-07 17:26:13
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-14 11:23:29
+* @Last Modified time: 2016-11-14 11:29:17
 */
 
 import React, { Component } from 'react';
@@ -159,9 +159,6 @@ class Login extends Component {
               </FormGroup>
               <Button type="submit">
                 Submit
-              </Button>
-              <Button onClick={this.handleSubmit}>
-                handleSubmit
               </Button>
             </form>
             </Modal.Body>
