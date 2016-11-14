@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:56:58
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-12 19:37:24
+* @Last Modified time: 2016-11-14 11:21:05
 */
 
 
@@ -13,7 +13,7 @@ import './Profile.css';
 import axios from 'axios';
 import { Row, Col, ListGroup, ListGroupItem}
   from 'react-bootstrap';
-// import { Link } from 'react-router';
+import { Link } from 'react-router';
 
 class Profile extends Component {
   constructor(props) {
@@ -115,18 +115,33 @@ class Profile extends Component {
   eventHistory(){
     this.setState({'check_class': 'album', event_class: 'active', edit_class: 'album'})
     // to get event history in userid
-    axios.get('/profile', {
+    axios.get('/profile/eventhistory', {
       params: {
         userid: this.state.userid
       }
       }).then(res => {
-        this.showProfile(res.data);
+        this.showEventHistory(res.data);
     });
-    this.showEventHistory();
+    // this.showEventHistory();
   }
 
-  showEventHistory(){
+  showEventHistory(data){
+    if (data === null || data.length === 0) {
+      this.setState({
+          posts: ''
+      });
+    } else {
+      var content = data.map((x) =>
+          <div key={x.eventid}>
+            <h4><Link to={`/eventDetail/${x.eventid}`}> {x.eventtitle} </Link></h4>
+            <p> {x.eventdescription} </p>
+          </div>
+      );
 
+      this.setState({
+          posts: content
+      });
+    }
   }
 
   render() {

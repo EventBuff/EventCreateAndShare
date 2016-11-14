@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-07 17:26:13
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-09 17:20:28
+* @Last Modified time: 2016-11-14 11:23:29
 */
 
 import React, { Component } from 'react';
@@ -65,6 +65,8 @@ class Login extends Component {
       // window.oepn( {} , 'profile', '/profile/' + userid);
       // this.props.history.replaceState(null, '/profile/' + {userid});
       localStorage.setItem("userid", userid);
+      localStorage.setItem("isadmin", data.isadmin);
+
       window.location.href='/profile/' + userid;
       // window.open('/profile/' + userid);
       // window.open("http://www.w3schools.com");
@@ -96,9 +98,22 @@ class Login extends Component {
     var sign_repassword = ReactDom.findDOMNode(this.refs.repassword).value;
     if (sign_password !== sign_repassword){
       alert("password not same");
+      return
+
     }
-    console.log(sign_username);
-    console.log(sign_password);
+    axios.get('/signup', {
+        params: {
+          email: sign_email,
+          username: sign_username,
+          password: sign_password
+        }
+      }).then(res => {
+        console.log(res.data);
+        if (res.data === 'success'){
+          alert("You have successfully signed up");
+        }
+    }); 
+    
   }
 
   render() {
