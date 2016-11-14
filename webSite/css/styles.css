@@ -69,6 +69,14 @@
 	font-color: black;
 }
 
+/*text style for error massages */
+.error_massage {
+	font-weight: italic; 
+	font-size: 30px; 
+	font-style: italic;
+}
+
+
 .sample {
 	position:absolute;
 	top:25px;
