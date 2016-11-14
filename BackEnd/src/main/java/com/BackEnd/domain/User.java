@@ -21,30 +21,30 @@ public class User {
     private String username;
 
     @Column(nullable = false)
-    private String password; //change it to char[]
+    private String password;
 
     @Column()
     private String phonenumber;
 
-    @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
+    @Column(columnDefinition = "TINYINT", length = 1)
     private Boolean isadmin;
 
-    @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
+    @Column(columnDefinition = "TINYINT", length = 1)
     private Boolean isdelete;
 
-    @Column(nullable = false)
+    @Column()
     private String firstname;
 
-    @Column(nullable = false)
+    @Column()
     private String lastname;
 
-    @Column(nullable = false)
+    @Column()
     private String location;
 
-    @Column(nullable = false)
+    @Column()
     private String gender;
 
-    @Column(nullable = false)
+    @Column()
     private String description;
 
     public User(){}
@@ -64,6 +64,11 @@ public class User {
         this.description = description;
     }
 
+     public User(String email, String username, String password){
+         this.email = email;
+         this.username = username;
+         this.password = password;
+     }
 
     public Integer getUserid() {
         return userid;
@@ -151,6 +156,14 @@ public class User {
 
     public void setIsdelete(Boolean isdelete) {
         this.isdelete = isdelete;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

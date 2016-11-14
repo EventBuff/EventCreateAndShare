@@ -48,6 +48,41 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("update User u set u.isdelete = ?1 where u.userid = ?2")
     int setFixedIsdeleteFor(@Param("isdelete") Boolean isdelete ,@Param("userid") Integer userid);
 
+    //email
+    @Modifying
+    @Transactional
+    @Query("update User u set u.email = ?1 where u.userid = ?2")
+    int setFixedEmailFor(@Param("email") String email ,@Param("userid") Integer userid);
+
+    //firstname
+    @Modifying
+    @Transactional
+    @Query("update User u set u.firstname = ?1 where u.userid = ?2")
+    int setFixedFirstnameFor(@Param("firstname") String firstname ,@Param("userid") Integer userid);
+
+    //lastname
+    @Modifying
+    @Transactional
+    @Query("update User u set u.lastname = ?1 where u.userid = ?2")
+    int setFixedLastnameFor(@Param("lastname") String lastname ,@Param("userid") Integer userid);
+
+    //location
+    @Modifying
+    @Transactional
+    @Query("update User u set u.location = ?1 where u.userid = ?2")
+    int setFixedLocationFor(@Param("location") String location ,@Param("userid") Integer userid);
+
+    //gender
+    @Modifying
+    @Transactional
+    @Query("update User u set u.gender = ?1 where u.userid = ?2")
+    int setFixedGenderFor(@Param("gender") String gender ,@Param("userid") Integer userid);
+
+    //description
+    @Modifying
+    @Transactional
+    @Query("update User u set u.description = ?1 where u.userid = ?2")
+    int setFixedDescriptionFor(@Param("description") String description ,@Param("userid") Integer userid);
 
     //insert: save
 

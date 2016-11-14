@@ -18,15 +18,15 @@ public class AddEquipmentController {
     @Autowired
     private EquipmentRepository equipmentRepository;
 
-    @RequestMapping("/equipment")
+    @RequestMapping("/equipment/add")
     public String addEquipment(String equipmentdescription, String equipmentname, Integer userid){
         //if the user is admin and the equipment is not exist
         if(equipmentRepository.findByEquipmentname(equipmentname) == null
                 && userRepository.findByUserid(userid) != null
-                && userRepository.findByUserid(userid).getIsadmin() == true){//userRepository.findByUserid(userid).getIsadmin() == true && equipmentRepository.findByEquipmentname(equipmentname) == null){
+                && userRepository.findByUserid(userid).getIsadmin() == true){
             equipmentRepository.save(new com.BackEnd.domain.Equipment(equipmentdescription, equipmentname));
-            return "You add this equipment successfully!";
+            return "success";
         }
-        else return "You cannot add this equipment!";
+        return "failure";
     }
 }

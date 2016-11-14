@@ -20,6 +20,6 @@ public class CheckProfileController {
         if(userRepository.findByUserid(userid) != null){
             return(userRepository.findByUserid(userid));
         }
-        else return null;
+        return null;
     }
 }
