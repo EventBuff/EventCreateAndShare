@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-07 17:26:13
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-14 11:29:17
+* @Last Modified time: 2016-11-16 11:44:54
 */
 
 import React, { Component } from 'react';
@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import './Login.css';
 // import Navigation from './Navigation';
 import axios from 'axios';
-import { HelpBlock, Modal, Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
+import { Row, HelpBlock, Modal, Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
   from 'react-bootstrap';
 import ReactDom from 'react-dom';
 // import { Link } from 'react-router';
@@ -176,7 +176,7 @@ class Login extends Component {
       <Col componentClass={ControlLabel} sm={2}>
         Email
       </Col>
-      <Col sm={10}>
+      <Col sm={4}>
         <FormControl type="email" placeholder="Email" ref="log_email"/>
       </Col>
     </FormGroup>
@@ -185,22 +185,23 @@ class Login extends Component {
       <Col componentClass={ControlLabel} sm={2}>
         Password
       </Col>
-      <Col sm={10}>
+      <Col sm={4}>
         <FormControl type="password" placeholder="Password" ref="log_password"/>
       </Col>
     </FormGroup>
 
     <FormGroup>
-      <Col smOffset={2} sm={10}>
+      <Col smOffset={2} sm={4}>
         <Checkbox>Remember me</Checkbox>
       </Col>
     </FormGroup>
 
     <FormGroup>
-      <Col smOffset={2} sm={10}>
+      <Col smOffset={2} sm={4}>
         <Button onClick={this.handleClick}>
           log in
-        </Button>
+        </Button>  
+        
         <Button
           onClick={this.open}
         >
@@ -212,8 +213,14 @@ class Login extends Component {
 
     return (
       <div>
-      {formInstance}
-      {signContent}
+      <Row>
+        <Col sm={4}/>
+        <Col sm={6}>
+        {formInstance}
+        {signContent}
+        </Col>
+        <Col sm={3}/>
+      </Row>
       </div>
     );
   }
