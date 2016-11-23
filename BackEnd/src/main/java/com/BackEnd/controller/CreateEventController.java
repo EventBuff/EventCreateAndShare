@@ -3,7 +3,6 @@ package com.BackEnd.controller;
 import com.BackEnd.domain.EquipmentRepository;
 import com.BackEnd.domain.EventRepository;
 import com.BackEnd.domain.UserRepository;
-import com.BackEnd.entity.CreateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

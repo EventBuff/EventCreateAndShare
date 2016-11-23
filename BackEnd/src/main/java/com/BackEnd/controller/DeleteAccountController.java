@@ -31,8 +31,9 @@ public class DeleteAccountController {
                     //if the event is open
                     if(event.getIsclose() == false){
                         event.setIsclose(true);
-                        //delete participant
-                        userEventRepository.deleteByEventid(event.getEventid());
+                        event.setClosereason("delete account");
+//                        //delete participant
+//                        userEventRepository.deleteByEventid(event.getEventid());
                     }
                 }
             }
@@ -41,11 +42,17 @@ public class DeleteAccountController {
                 for(UserEvent userEvent: userEventRepository.findByParticipantid(userid)){
                     //if the event is still open
                     if(eventRepository.findByEventid(userEvent.getEventid()).getIsclose() == false) {
+                        //numofpeople -1
+                        Integer numPeople = eventRepository.findByEventid(userEvent.getEventid()).getNownum();
+                        numPeople -= 1;
+                        eventRepository.setFixedNownumFor(numPeople, userEvent.getEventid());
+
                         //delete participant in event
                         userEventRepository.delete(userEvent);
                     }
                 }
             }
+
             return "success";
         }
         return "failure";
