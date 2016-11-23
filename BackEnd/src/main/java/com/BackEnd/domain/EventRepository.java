@@ -65,7 +65,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     //nownum
     @Modifying
     @Transactional
-    @Query("update Event eve set eve.closereason = ?1 where eve.eventid = ?2")
+    @Query("update Event eve set eve.nownum = ?1 where eve.eventid = ?2")
     int setFixedNownumFor(@Param("nownum") Integer nownum , @Param("eventid") Integer eventid);
     //insert: save
 
