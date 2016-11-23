@@ -1,6 +1,7 @@
 package com.BackEnd.controller;
 
 import com.BackEnd.domain.EquipmentRepository;
+import com.BackEnd.domain.EventEquipmentRepository;
 import com.BackEnd.domain.EventRepository;
 import com.BackEnd.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,21 @@ public class CreateEventController {
     private UserRepository userRepository;
     @Autowired
     private EquipmentRepository equipmentRepository;
+    @Autowired
+    private EventEquipmentRepository eventEquipmentRepository;
 
     @RequestMapping("/createEvent")
     public String createEvent(String eventtitle, Timestamp starttime, Timestamp endtime, String eventdescription,
-                                   Integer numofpeople, Integer nownum, String eventtag, String eventphoto,
+                                   Integer numofpeople, String eventtag, String eventphoto,
                                    Integer creatorid, String location, String equipmentname){
         //if user is exist
         if(userRepository.findByUserid(creatorid) != null && userRepository.findByUserid(creatorid).getIsdelete() == false
                 && equipmentRepository.findByEquipmentname(equipmentname) != null){
-            eventRepository.save(new com.BackEnd.domain.Event(eventtitle, starttime, endtime, eventdescription,
+            Integer nownum = 1;
+            com.BackEnd.domain.Event event = eventRepository.save(new com.BackEnd.domain.Event(eventtitle, starttime, endtime, eventdescription,
                     numofpeople, nownum, eventtag, creatorid, eventphoto, location, false));
+            eventEquipmentRepository.save(new com.BackEnd.domain.EventEquipment(event.getEventid(),
+                    equipmentRepository.findByEquipmentname(equipmentname).getEquipmentid()));
             return "success";
         }
         return "failure";
