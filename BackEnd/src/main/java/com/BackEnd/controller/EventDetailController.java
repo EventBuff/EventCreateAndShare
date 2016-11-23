@@ -1,12 +1,13 @@
 package com.BackEnd.controller;
 
-import com.BackEnd.domain.Event;
+import com.BackEnd.domain.*;
 import com.BackEnd.entity.EventDetail;
-import com.BackEnd.domain.EventRepository;
-import com.BackEnd.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  * Created by yanli on 11/6/16.
@@ -18,6 +19,10 @@ public class EventDetailController {
     private EventRepository eventRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EquipmentRepository equipmentRepository;
+    @Autowired
+    private EventEquipmentRepository eventEquipmentRepository;
 
     @RequestMapping("/eventDetail")
     public EventDetail eventDetail(Integer eventid){
@@ -25,10 +30,14 @@ public class EventDetailController {
         if(eventRepository.findByEventid(eventid) != null &&
                 userRepository.findByUserid(eventRepository.findByEventid(eventid).getCreatorid()) != null){
             Integer creatorid = eventRepository.findByEventid(eventid).getCreatorid();
+            List<String> equipmentname = new ArrayList<String>();
+            for(com.BackEnd.domain.EventEquipment eventEquipment: eventEquipmentRepository.findByEventid(eventid)){
+                equipmentname.add(equipmentRepository.findByEquipmentid(eventEquipment.getEquipmentid()).getEquipmentname());
+            }
             return new EventDetail(eventRepository.findByEventid(eventid),
-                    userRepository.findByUserid(creatorid).getUsername());
+                    userRepository.findByUserid(creatorid).getUsername(), equipmentname);
         }
-        else return null;
+        return null;
     }
 
 }
