@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 20:43:01
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-23 15:49:52
+* @Last Modified time: 2016-11-23 15:57:40
 */
 
 import React, { Component, PropTypes } from 'react';
@@ -81,7 +81,7 @@ class CreateEvent extends Component {
                 <FormControl
                   type="text"
                   placeholder="Mountain Hiking"
-                  ref="title"
+                  ref="eventtitle"
                 />
                 <HelpBlock>Enter your event title</HelpBlock>
               </FormGroup>
@@ -97,7 +97,7 @@ class CreateEvent extends Component {
                 <ControlLabel>Description</ControlLabel>
                 <FormControl
                   type="text"
-                  ref="description"
+                  ref="eventdescription"
                   placeholder="This is an event about hiking."
                 />
               </FormGroup>
@@ -110,20 +110,20 @@ class CreateEvent extends Component {
                 />
                 <HelpBlock>Enter max number of people in this event except you</HelpBlock>
               </FormGroup>
-              <FormGroup>
-                <ControlLabel>Password</ControlLabel>
-                <FormControl
-                  type="Password"
-                  placeholder="Password"
-                  ref="password"
-                />
+              <FormGroup controlId="formControlsSelect">
+                <ControlLabel>Select Tag</ControlLabel>
+                <FormControl componentClass="select" ref="eventtag">
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="other">Other</option>
+                </FormControl>
               </FormGroup>
               <FormGroup>
-                <ControlLabel>Repeat Password</ControlLabel>
+                <ControlLabel>location</ControlLabel>
                 <FormControl
-                  type="Password"
-                  placeholder="Repeat Password"
-                  ref="repassword"
+                  type="text"
+                  placeholder="Boulder"
+                  ref="location"
                 />
               </FormGroup>
               <Button type="submit">
@@ -134,8 +134,7 @@ class CreateEvent extends Component {
       <div>
 
         <Col md={3} />
-        <Col md={9}>
-        
+        <Col md={6}>
         {posts}
         {content}
         </Col>
