@@ -69,6 +69,20 @@
 	font-color: black;
 }
 
+/*text style for error massages */
+.error_massage {
+	font-weight: italic; 
+	font-size: 30px; 
+	font-style: italic;
+}
+
+/*image size for event */
+.event_image {
+	border-image-width: 5px;
+	width: 250px;
+	height: 200px;
+}
+
 .sample {
 	position:absolute;
 	top:25px;
