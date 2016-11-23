@@ -23,15 +23,15 @@ public class DeleteAccountController {
         if(userRepository.findByUserid(userid).getUsername().equals(username) &&
                 userRepository.findByUserid(userid).getPassword().equals(password) &&
                 userRepository.findByUserid(userid).getEmail().equals(email)){
-            userRepository.findByUserid(userid).setIsdelete(true);
+            userRepository.setFixedIsdeleteFor(true, userid);
             //close event which user create
             //if user is creator, close the event which is open
             if(eventRepository.findByCreatorid(userid) != null){
                 for(Event event: eventRepository.findByCreatorid(userid)){
                     //if the event is open
                     if(event.getIsclose() == false){
-                        event.setIsclose(true);
-                        event.setClosereason("delete account");
+                        eventRepository.setFixedIscloseFor(true, event.getEventid());
+                        eventRepository.setFixedClosereasonFor("delete account", event.getEventid());
 //                        //delete participant
 //                        userEventRepository.deleteByEventid(event.getEventid());
                     }
