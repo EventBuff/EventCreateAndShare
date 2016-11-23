@@ -1,9 +1,7 @@
 package com.BackEnd.controller;
 
-import com.BackEnd.domain.Event;
-import com.BackEnd.domain.EventRepository;
-import com.BackEnd.domain.UserEvent;
-import com.BackEnd.domain.UserEventRepository;
+import com.BackEnd.domain.*;
+import com.BackEnd.entity.EventDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,22 +17,38 @@ public class EventHistoryController {
     private EventRepository eventRepository;
     @Autowired
     private UserEventRepository userEventRepository;
+    @Autowired
+    private EventEquipmentRepository eventEquipmentRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private EquipmentRepository equipmentRepository;
 
     @RequestMapping("/profile/eventhistory")
-    public List<Event> eventHistory(Integer userid){
-        List<Event> eventList = new ArrayList<Event>();
-        List<UserEvent> userEventList;
+    public List<EventDetail> eventHistory(Integer userid){
+        List<EventDetail> eventDetails = new ArrayList<EventDetail>();
+        //List<UserEvent> userEventList;
         //event that user create
         if(eventRepository.findByCreatorid(userid) != null){
-            eventList.addAll(eventRepository.findByCreatorid(userid));
+            for(com.BackEnd.domain.Event event: eventRepository.findByCreatorid(userid)){
+                List<String> equipmentname = new ArrayList<String>();
+                for(com.BackEnd.domain.EventEquipment eventEquipment: eventEquipmentRepository.findByEventid(event.getEventid())){
+                    equipmentname.add(equipmentRepository.findByEquipmentid(eventEquipment.getEquipmentid()).getEquipmentname());
+                }
+                eventDetails.add(new EventDetail(event, userRepository.findByUserid(userid).getUsername(), equipmentname));
+            }
+            //eventList.addAll(eventRepository.findByCreatorid(userid));
         }
         //event that user participate in
         if(userEventRepository.findByParticipantid(userid) !=null){
-            userEventList = userEventRepository.findByParticipantid(userid);
-            for(int i = 0; i< userEventList.size(); i++){
-                eventList.add(eventRepository.findByEventid(userEventList.get(i).getEventid()));
+            for(com.BackEnd.domain.UserEvent userEvent: userEventRepository.findByParticipantid(userid)){
+                List<String> equipmentname = new ArrayList<String>();
+                for(com.BackEnd.domain.EventEquipment eventEquipment: eventEquipmentRepository.findByEventid(userEvent.getEventid())){
+                    equipmentname.add(equipmentRepository.findByEquipmentid(eventEquipment.getEquipmentid()).getEquipmentname());
+                }
+                eventDetails.add(new EventDetail(eventRepository.findByEventid(userEvent.getEventid()), userRepository.findByUserid(userid).getUsername(), equipmentname));
             }
         }
-        return eventList;
+        return eventDetails;
     }
 }
