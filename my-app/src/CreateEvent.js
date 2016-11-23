@@ -2,14 +2,16 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 20:43:01
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-06 21:57:41
+* @Last Modified time: 2016-11-23 15:57:40
 */
 
 import React, { Component, PropTypes } from 'react';
 import './CreateEvent.css';
 import axios from 'axios';
 import { Link } from 'react-router';
-// import { Grid } from 'react-bootstrap';
+import { HelpBlock, Modal, Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
+  from 'react-bootstrap';
+import Datetime from 'react-datetime';
 
 // Need update for the api
 class CreateEvent extends Component {
@@ -23,9 +25,13 @@ class CreateEvent extends Component {
     this.state = {
       posts: '',
       postsCheckNum: 0,
-      userid: localStorage["userid"]
+      userid: localStorage["userid"],
+      startTime: new Date(),
+      endTime: new Date()
     };
-    this.showEventDetail = this.showEventDetail.bind(this)
+    this.showEventDetail = this.showEventDetail.bind(this);
+    this.handleChangeStartTime = this.handleChangeStartTime.bind(this);
+    this.handleChangeEndTime = this.handleChangeEndTime.bind(this);
   }
 
   componentWillMount() {
@@ -56,11 +62,82 @@ class CreateEvent extends Component {
     }
   }
 
+  handleChangeStartTime(event) {
+    // console.log(event._d);
+    this.setState({startTime: event._d});
+  }
+
+  handleChangeEndTime(event){
+    // console.log(event._d);
+    this.setState({endTime: event._d});
+  }
+
   render() {
     var posts = this.state.posts
+    var content = 
+        <form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <ControlLabel>Event Title</ControlLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Mountain Hiking"
+                  ref="eventtitle"
+                />
+                <HelpBlock>Enter your event title</HelpBlock>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Start Time</ControlLabel>
+                <Datetime value={this.state.startTime} onChange={this.handleChangeStartTime}/>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>End Time</ControlLabel>
+                <Datetime value={this.state.endTime} onChange={this.handleChangeEndTime}/>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Description</ControlLabel>
+                <FormControl
+                  type="text"
+                  ref="eventdescription"
+                  placeholder="This is an event about hiking."
+                />
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Number of People</ControlLabel>
+                <FormControl
+                  type="text"
+                  ref="numofpeople"
+                  placeholder="10"
+                />
+                <HelpBlock>Enter max number of people in this event except you</HelpBlock>
+              </FormGroup>
+              <FormGroup controlId="formControlsSelect">
+                <ControlLabel>Select Tag</ControlLabel>
+                <FormControl componentClass="select" ref="eventtag">
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="other">Other</option>
+                </FormControl>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>location</ControlLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Boulder"
+                  ref="location"
+                />
+              </FormGroup>
+              <Button type="submit">
+                Submit
+              </Button>
+            </form>
     return(
       <div>
+
+        <Col md={3} />
+        <Col md={6}>
         {posts}
+        {content}
+        </Col>
       </div>
     );
   }

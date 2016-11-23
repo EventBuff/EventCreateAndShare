@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 20:43:01
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-06 21:57:41
+* @Last Modified time: 2016-11-23 15:15:38
 */
 
 import React, { Component, PropTypes } from 'react';
@@ -165,14 +165,16 @@ class EventDetail extends Component {
           posts: ''
       });
     } else {
+      var beginTime = new Date(event_data.starttime).toString();
+      var endtime = new Date(event_data.endtime).toString();
       var close =  event_data.isclose === true?1:0;
       var content =
           <div>
             <h4><Link to={`/eventDetail/${event_data.eventid}`}> {event_data.eventtitle} </Link></h4>
             <p> {event_data.eventtag} </p>
             <p> {event_data.eventdescription} </p>
-            <p> {event_data.starttime} </p>
-            <p> {event_data.endtime} </p>
+            <p> {beginTime} </p>
+            <p> {endtime} </p>
             <p> numofpeople {event_data.numofpeople} </p>
             <p> nownum {event_data.nownum} </p>
             <p> {event_data.eventphoto} </p>
