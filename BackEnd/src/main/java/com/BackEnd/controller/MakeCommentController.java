@@ -21,15 +21,12 @@ public class MakeCommentController {
 
     @RequestMapping("/eventDetail/makeComment")
     public String makeComment(Integer eventid, Integer userid, String comment){
-        //if event is not closed
-        if(eventRepository.findByEventid(eventid).getIsclose() == false){
-            //user is creator or participant
-            if(eventRepository.findByEventid(eventid).getCreatorid() == userid ||
-                    userEventRepository.findByEventidAndParticipantid(eventid, userid) != null){
-                commentRepository.save(new com.BackEnd.domain.Comment(userid, eventid, comment));
-                return "success";
+        //user is creator or participant
+        if(eventRepository.findByEventid(eventid).getCreatorid() == userid ||
+                userEventRepository.findByEventidAndParticipantid(eventid, userid) != null) {
+            commentRepository.save(new com.BackEnd.domain.Comment(userid, eventid, comment));
+            return "success";
             }
-        }
-        return "false";
+        return "failure";
     }
 }

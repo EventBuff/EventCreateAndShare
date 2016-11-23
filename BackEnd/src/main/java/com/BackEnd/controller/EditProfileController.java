@@ -15,19 +15,15 @@ public class EditProfileController {
     private UserRepository userRepository;
 
     @RequestMapping("/profile/edit")
-    public String editProfile(Integer userid, String email, String username, String firstname,
-                              String lastname, String location, String gender, String phonenumber,
-                              String description, String password){
+    public String editProfile(Integer userid, String firstname, String lastname, String location,
+                              String gender, String phonenumber, String description){
         if(userRepository.findByUserid(userid) != null && userRepository.findByUserid(userid).getIsdelete() == false){
-            userRepository.setFixedEmailFor(email, userid);
-            userRepository.setFixedUsernameFor(username, userid);
             userRepository.setFixedFirstnameFor(firstname, userid);
             userRepository.setFixedLastnameFor(lastname, userid);
             userRepository.setFixedLocationFor(location, userid);
             userRepository.setFixedGenderFor(gender, userid);
             userRepository.setFixedPhonenumberFor(phonenumber, userid);
             userRepository.setFixedDescriptionFor(description, userid);
-            userRepository.setFixedPasswordFor(password, userid);
             return "success";
         }
         return "failure";
