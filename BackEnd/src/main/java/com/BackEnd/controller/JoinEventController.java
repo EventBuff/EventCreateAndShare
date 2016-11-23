@@ -36,7 +36,9 @@ public class JoinEventController {
              if(userEventRepository.findByEventidAndParticipantid(eventid, userid) == null) {
                  userEventRepository.save(new com.BackEnd.domain.UserEvent(eventid, userid));
                  //nownum +1
-                 //eventRepository.setFixedNownumFor(5, eventid);
+                 Integer numPeople = eventRepository.findByEventid(eventid).getNownum();
+                 numPeople += 1;
+                 eventRepository.setFixedNownumFor(numPeople, eventid);
              }
              return "success";
         }

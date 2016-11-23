@@ -2,6 +2,7 @@ package com.BackEnd.controller;
 
 import com.BackEnd.domain.User;
 import com.BackEnd.domain.UserRepository;
+import com.BackEnd.entity.CheckProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +17,11 @@ public class CheckProfileController {
     private UserRepository userRepository;
 
     @RequestMapping("/profile")
-    public User checkProfile(Integer userid){
+    public CheckProfile checkProfile(Integer userid){
         if(userRepository.findByUserid(userid) != null){
-            return(userRepository.findByUserid(userid));
+            User user = userRepository.findByUserid(userid);
+            return new CheckProfile(user.getEmail(), user.getUsername(), user.getPhonenumber(), user.getIsadmin(), user.getIsdelete(),
+                    user.getFirstname(), user.getLastname(), user.getLocation(), user.getGender(), user.getDescription());
         }
         return null;
     }

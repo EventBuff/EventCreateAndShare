@@ -32,6 +32,11 @@ public class LeaveEventController {
                 && eventRepository.findByEventid(eventid).getIsclose() == false
                 //if user is not creator
                 && eventRepository.findByEventid(eventid).getCreatorid() != userid){
+            //nownum -1
+            Integer numPeople = eventRepository.findByEventid(eventid).getNownum();
+            numPeople -= 1;
+            eventRepository.setFixedNownumFor(numPeople, eventid);
+            //delete user from event
             userEventRepository.deleteByEventidAndParticipantid(eventid, userid);
             return "success";
         }
