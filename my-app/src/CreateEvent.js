@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 20:43:01
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-14 11:48:31
+* @Last Modified time: 2016-11-23 15:49:52
 */
 
 import React, { Component, PropTypes } from 'react';
@@ -11,6 +11,7 @@ import axios from 'axios';
 import { Link } from 'react-router';
 import { HelpBlock, Modal, Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
   from 'react-bootstrap';
+import Datetime from 'react-datetime';
 
 // Need update for the api
 class CreateEvent extends Component {
@@ -24,9 +25,13 @@ class CreateEvent extends Component {
     this.state = {
       posts: '',
       postsCheckNum: 0,
-      userid: localStorage["userid"]
+      userid: localStorage["userid"],
+      startTime: new Date(),
+      endTime: new Date()
     };
-    this.showEventDetail = this.showEventDetail.bind(this)
+    this.showEventDetail = this.showEventDetail.bind(this);
+    this.handleChangeStartTime = this.handleChangeStartTime.bind(this);
+    this.handleChangeEndTime = this.handleChangeEndTime.bind(this);
   }
 
   componentWillMount() {
@@ -57,6 +62,16 @@ class CreateEvent extends Component {
     }
   }
 
+  handleChangeStartTime(event) {
+    // console.log(event._d);
+    this.setState({startTime: event._d});
+  }
+
+  handleChangeEndTime(event){
+    // console.log(event._d);
+    this.setState({endTime: event._d});
+  }
+
   render() {
     var posts = this.state.posts
     var content = 
@@ -66,17 +81,34 @@ class CreateEvent extends Component {
                 <FormControl
                   type="text"
                   placeholder="Mountain Hiking"
-                  ref="email"
+                  ref="title"
                 />
                 <HelpBlock>Enter your event title</HelpBlock>
               </FormGroup>
               <FormGroup>
-                <ControlLabel>User Name</ControlLabel>
+                <ControlLabel>Start Time</ControlLabel>
+                <Datetime value={this.state.startTime} onChange={this.handleChangeStartTime}/>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>End Time</ControlLabel>
+                <Datetime value={this.state.endTime} onChange={this.handleChangeEndTime}/>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Description</ControlLabel>
                 <FormControl
                   type="text"
-                  placeholder="User Name"
-                  ref="username"
+                  ref="description"
+                  placeholder="This is an event about hiking."
                 />
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Number of People</ControlLabel>
+                <FormControl
+                  type="text"
+                  ref="numofpeople"
+                  placeholder="10"
+                />
+                <HelpBlock>Enter max number of people in this event except you</HelpBlock>
               </FormGroup>
               <FormGroup>
                 <ControlLabel>Password</ControlLabel>
@@ -100,8 +132,10 @@ class CreateEvent extends Component {
             </form>
     return(
       <div>
+
         <Col md={3} />
         <Col md={9}>
+        
         {posts}
         {content}
         </Col>
