@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:56:58
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-14 11:21:05
+* @Last Modified time: 2016-11-23 14:00:09
 */
 
 
@@ -91,7 +91,6 @@ class Profile extends Component {
   }
 
   showEditProfile(data) {
-
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
