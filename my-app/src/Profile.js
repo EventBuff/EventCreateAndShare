@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:56:58
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-23 17:37:55
+* @Last Modified time: 2016-11-23 18:18:12
 */
 
 
@@ -49,7 +49,7 @@ class Profile extends Component {
       }
       }).then(res => {
         this.showProfile(res.data);
-      });
+    });
   }
 
   componentDidMount() {
