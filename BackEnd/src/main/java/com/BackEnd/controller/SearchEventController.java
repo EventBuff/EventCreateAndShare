@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by yanli on 11/3/16.
@@ -26,7 +27,7 @@ public class SearchEventController {
     private UserRepository userRepository;
 
     @RequestMapping("/searchEvent")
-    public List<EventDetail> searchEvent(String eventtag){
+    public List<EventDetail> searchEvent(@RequestParam String eventtag){
         List <EventDetail> eventList = new ArrayList<EventDetail>();
         if(eventtag == null || eventtag.length() == 0){
            for(com.BackEnd.domain.Event event: eventRepository.findAll()){

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.ArrayList;
+import org.springframework.web.bind.annotation.RequestParam;
+
 /**
  * Created by yanli on 11/12/16.
  */
@@ -25,7 +27,7 @@ public class EventHistoryController {
     private EquipmentRepository equipmentRepository;
 
     @RequestMapping("/profile/eventhistory")
-    public List<EventDetail> eventHistory(Integer userid){
+    public List<EventDetail> eventHistory(@RequestParam Integer userid){
         List<EventDetail> eventDetails = new ArrayList<EventDetail>();
         //List<UserEvent> userEventList;
         //event that user create

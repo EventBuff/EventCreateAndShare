@@ -7,6 +7,7 @@ import com.BackEnd.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by yanli on 11/7/16.
@@ -23,7 +24,7 @@ public class LeaveEventController {
     private UserRepository userRepository;
 
     @RequestMapping("/eventDetail/leave")
-    public String leaveEvent(Integer eventid, Integer userid){
+    public String leaveEvent(@RequestParam Integer eventid, @RequestParam Integer userid){
         //If event and user exist
         if(eventRepository.findByEventid(eventid) != null && userRepository.findByUserid(userid) !=null
                 //if user has participated in this event

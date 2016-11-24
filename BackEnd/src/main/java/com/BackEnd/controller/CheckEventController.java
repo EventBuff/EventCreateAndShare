@@ -7,6 +7,8 @@ import javafx.event.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * Created by yanli on 11/11/16.
@@ -21,7 +23,7 @@ public class CheckEventController {
     private UserRepository userRepository;
 
     @RequestMapping("/eventDetail/check")
-    public String checkEvent(Integer eventid, Integer userid){
+    public String checkEvent(@RequestParam Integer eventid, @RequestParam Integer userid){
         //if event and user exist
         if(eventRepository.findByEventid(eventid) != null && userRepository.findByUserid(userid) != null){
             //if user is creator, participant, nonparticipant
