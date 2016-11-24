@@ -4,6 +4,7 @@ import com.BackEnd.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by yanli on 11/11/16.
@@ -14,7 +15,7 @@ public class SignUpController {
     private UserRepository userRepository;
 
     @RequestMapping("/signup")
-    public String signUp(String email, String username, String password){
+    public String signUp(@RequestParam String email, @RequestParam String username, @RequestParam String password){
         if(userRepository.findByEmail(email) == null && password != null && username != null
                 && email != null){
             userRepository.save(new com.BackEnd.domain.User(email, username, password));
