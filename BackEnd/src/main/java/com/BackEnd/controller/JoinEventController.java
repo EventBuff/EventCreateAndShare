@@ -7,6 +7,7 @@ import com.BackEnd.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by yanli on 11/6/16.
@@ -23,7 +24,7 @@ public class JoinEventController {
     private UserEventRepository userEventRepository;
 
     @RequestMapping("/eventDetail/join")
-    public String joinEvent(Integer eventid, Integer userid){
+    public String joinEvent(@RequestParam Integer eventid, @RequestParam Integer userid){
         //if event and user exist
          if(eventRepository.findByEventid(eventid) != null && userRepository.findByUserid(userid) != null
                  //if this event is not closed

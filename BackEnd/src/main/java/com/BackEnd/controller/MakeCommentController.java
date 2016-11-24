@@ -6,6 +6,7 @@ import com.BackEnd.domain.UserEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by yanli on 11/11/16.
@@ -20,7 +21,7 @@ public class MakeCommentController {
     private UserEventRepository userEventRepository;
 
     @RequestMapping("/eventDetail/makeComment")
-    public String makeComment(Integer eventid, Integer userid, String comment){
+    public String makeComment(@RequestParam Integer eventid, @RequestParam Integer userid, @RequestParam String comment){
         //user is creator or participant
         if(eventRepository.findByEventid(eventid).getCreatorid() == userid ||
                 userEventRepository.findByEventidAndParticipantid(eventid, userid) != null) {

@@ -4,6 +4,7 @@ import com.BackEnd.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by yanli on 11/11/16.
@@ -18,7 +19,8 @@ public class DeleteAccountController {
     private EventRepository eventRepository;
 
     @RequestMapping("/profile/delete")
-    public String deleteAccount(Integer userid, String username, String password, String email){
+    public String deleteAccount(@RequestParam Integer userid, @RequestParam String username, @RequestParam String password,
+                                @RequestParam String email){
         //if user is right
         if(userRepository.findByUserid(userid).getUsername().equals(username) &&
                 userRepository.findByUserid(userid).getPassword().equals(password) &&
