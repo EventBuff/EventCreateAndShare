@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 14:58:09
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-09 17:21:09
+* @Last Modified time: 2016-11-14 11:31:39
 */
 
 /*
@@ -29,6 +29,7 @@ class Navigation extends Component {
       value: '',
       content: '',
       userid: localStorage["userid"],
+      isadmin: localStorage["isadmin"]
     };
     this.myFunction = this.myFunction.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -68,8 +69,11 @@ class Navigation extends Component {
  
   logout(){
     localStorage.setItem("userid", '');
+    localStorage.setItem("isadmin", '');
+    
     this.setState({
-      userid: ''
+      userid: '',
+      isadmin: ''
     });
     window.location.href='/';
   }
@@ -87,6 +91,12 @@ class Navigation extends Component {
     //   default:
     //     content = "The original";
     // }
+    console.log(this.state.isadmin);
+    var admin_content = this.state.isadmin === "true"
+      ?  <LinkContainer to={`/Equipment/${this.state.userid}`}>
+            <NavItem eventKey="Add Equipment">Add Equipment</NavItem>
+         </LinkContainer>
+      : ''
     var log_content = this.state.userid == null || this.state.userid.length === 0
       ? <Nav pullRight>
           <LinkContainer to="/login">
@@ -94,6 +104,7 @@ class Navigation extends Component {
           </LinkContainer>
         </Nav>
       : <Nav pullRight>
+          {admin_content}
           <LinkContainer to={`/profile/${this.state.userid}`}>
             <NavItem eventKey="Check Profile">Profile</NavItem>
           </LinkContainer>

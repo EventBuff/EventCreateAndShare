@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:56:58
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-09 17:21:33
+* @Last Modified time: 2016-11-23 15:05:30
 */
 
 
@@ -11,9 +11,10 @@ import React, { Component } from 'react';
 import './Profile.css';
 // import Navigation from './Navigation';
 import axios from 'axios';
-import { Row, Col, ListGroup, ListGroupItem}
+import { FormControl, Button, ControlLabel, FormGroup, Row, Col, ListGroup, ListGroupItem}
   from 'react-bootstrap';
-// import { Link } from 'react-router';
+import ReactDom from 'react-dom';
+import { Link } from 'react-router';
 
 class Profile extends Component {
   constructor(props) {
@@ -22,15 +23,19 @@ class Profile extends Component {
     this.state = {
       posts: '',
       postsCheckNum: 0,
-      profileData: {},
+      profileData: '',
       check_class: 'active',
       event_class: 'album',
-      edit_class: 'album'
+      edit_class: 'album',
+      userid: ''
     };
     this.checkProfile = this.checkProfile.bind(this);
     this.showProfile = this.showProfile.bind(this);
     this.editProfile = this.editProfile.bind(this);
     this.showEditProfile = this.showEditProfile.bind(this);
+    this.showEventHistory = this.showEventHistory.bind(this);
+    this.eventHistory = this.eventHistory.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
@@ -49,6 +54,9 @@ class Profile extends Component {
 
   componentDidMount() {
     this.checkProfile();
+    this.setState({
+      userid: this.props.params.slug
+    });
   }
 
   showProfile(data) {
@@ -77,28 +85,84 @@ class Profile extends Component {
   }
 
   editProfile(){
-    this.setState({'check_class': 'album', event_class: 'album', edit_class: 'active'})
-    this.showEditProfile(this.state.profileData);
-    console.log(this.state.profileData);
+    this.setState({'check_class': 'album', event_class: 'album', edit_class: 'active'});
     var data = JSON.parse(this.state.profileData);
-    console.log(data)
+    this.showEditProfile(data);
   }
 
   showEditProfile(data) {
-
+    console.log(data);
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
       });
     } else {
       var content =
-          <div>
-            <h4> {data.email} </h4>
-            <p> {data.gender} </p>
-            <p> {data.firstname} </p>
-            <p> {data.lastname} </p>
-            <p> {data.phonenumber} </p>
-          </div>;
+          
+      this.setState({
+          postsCheckNum: 0
+      });
+    }
+  }
+
+  handleSubmit(){
+    var data = JSON.parse(this.state.profileData);
+    console.log("click submit profile");
+    var edit_id = this.state.userid;
+    var edit_email = data.email;
+    var edit_username = data.username;
+    var edit_firstname = ReactDom.findDOMNode(this.refs.firstname).value;
+    var edit_lastname = ReactDom.findDOMNode(this.refs.lastname).value;
+    var edit_gender = ReactDom.findDOMNode(this.refs.gender).value;
+    var edit_location = ReactDom.findDOMNode(this.refs.location).value;
+    var edit_phonenumber = ReactDom.findDOMNode(this.refs.phonenumber).value;
+    var edit_description = ReactDom.findDOMNode(this.refs.description).value;
+
+    axios.get('/profile/edit', {
+        params: {
+          userid: edit_id,
+          firstname: edit_firstname,
+          lastname: edit_lastname,
+          location: edit_location,
+          gender: edit_gender,
+          phonenumber: edit_phonenumber,
+          description: edit_description
+        }
+      }).then(res => {
+        console.log(res.data);
+        if (res.data === 'success'){
+          alert("You have successfully edit your profile");
+        }
+    }); 
+    
+  }
+
+  eventHistory(){
+    this.setState({'check_class': 'album', event_class: 'active', edit_class: 'album'})
+    // to get event history in userid
+    axios.get('/profile/eventhistory', {
+      params: {
+        userid: this.state.userid
+      }
+      }).then(res => {
+        this.showEventHistory(res.data);
+    });
+    // this.showEventHistory();
+  }
+
+  showEventHistory(data){
+    if (data === null || data.length === 0) {
+      this.setState({
+          posts: ''
+      });
+    } else {
+      var content = data.map((x) =>
+          <div key={x.eventid}>
+            <h4><Link to={`/eventDetail/${x.eventid}`}> {x.eventtitle} </Link></h4>
+            <p> {x.eventdescription} </p>
+          </div>
+      );
+
       this.setState({
           posts: content,
           postsCheckNum: 1
@@ -107,12 +171,97 @@ class Profile extends Component {
   }
 
   render() {
+    var editProfileContent = '';
+    if (this.state.profileData !== null && this.state.profileData.length !== 0){
+      console.log(this.state.profileData);
+      var data = JSON.parse(this.state.profileData);
+      var editProfileContent = 
+          <div>
+            <Col md={6}>
+            <form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <ControlLabel>Email</ControlLabel>
+                <FormControl.Static>
+                  {data.email}
+                </FormControl.Static>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Username</ControlLabel>
+                <FormControl.Static>
+                  {data.username}
+                </FormControl.Static>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>First Name</ControlLabel>
+                <FormControl
+                  type="text"
+                  ref="firstname"
+                  defaultValue={data.firstname}
+                />
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Last Name</ControlLabel>
+                <FormControl
+                  type="text"
+                  ref="lastname"
+                  defaultValue={data.lastname}
+                />
+              </FormGroup>
+              <FormGroup controlId="formControlsSelect">
+                <ControlLabel>Select Gender</ControlLabel>
+                <FormControl componentClass="select" placeholder={data.gender} defaultValue={data.gender} ref="gender">
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="other">Other</option>
+                </FormControl>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Location</ControlLabel>
+                <FormControl
+                  type="text"
+                  ref="location"
+                  defaultValue={data.location}
+                />
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Phone Number</ControlLabel>
+                <FormControl
+                  type="tel"
+                  ref="phonenumber"
+                  defaultValue={data.phonenumber}
+                />
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Description</ControlLabel>
+                <FormControl
+                  type="text"
+                  ref="description"
+                  defaultValue={data.description}
+                />
+              </FormGroup>
+              
+              <Button type="submit">
+                Submit
+              </Button>
+              <Button
+                onClick={this.handleSubmit}
+              >
+                Test
+              </Button>
+            </form>
+            </Col>
+          </div>
+    }
     // var value = this.state.value;
-    var posts = this.state.posts;
+    var posts = this.state.postsCheckNum === 0
+      ? editProfileContent
+      : this.state.posts;
     // list groun need to changed for editting
     return (
       <div>
         <div>
+          <Row>
+          </Row>
           <Row>
             <Col className="ProfileNavigation" xs={12} md={3}>
               <p> Profile </p>
