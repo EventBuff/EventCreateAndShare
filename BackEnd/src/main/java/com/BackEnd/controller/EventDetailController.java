@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.ArrayList;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -25,7 +26,7 @@ public class EventDetailController {
     private EventEquipmentRepository eventEquipmentRepository;
 
     @RequestMapping("/eventDetail")
-    public EventDetail eventDetail(Integer eventid){
+    public EventDetail eventDetail(@RequestParam Integer eventid){
         //if event exist
         if(eventRepository.findByEventid(eventid) != null &&
                 userRepository.findByUserid(eventRepository.findByEventid(eventid).getCreatorid()) != null){

@@ -6,6 +6,8 @@ import com.BackEnd.entity.CheckProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * Created by yanli on 11/6/16.
@@ -17,7 +19,7 @@ public class CheckProfileController {
     private UserRepository userRepository;
 
     @RequestMapping("/profile")
-    public CheckProfile checkProfile(Integer userid){
+    public CheckProfile checkProfile(@RequestParam Integer userid){
         if(userRepository.findByUserid(userid) != null){
             User user = userRepository.findByUserid(userid);
             return new CheckProfile(user.getEmail(), user.getUsername(), user.getPhonenumber(), user.getIsadmin(), user.getIsdelete(),

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by yanli on 11/11/16.
@@ -17,7 +18,7 @@ public class CommentListController {
     private CommentRepository commentRepository;
 
     @RequestMapping("/eventDetail/comment")
-    public List<Comment> commentList(Integer eventid){
+    public List<Comment> commentList(@RequestParam Integer eventid){
         List<Comment> commentList;
         commentList = commentRepository.findByEventid(eventid);
         return commentList;

@@ -7,8 +7,11 @@ import com.BackEnd.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by yanli on 11/11/16.
@@ -26,17 +29,26 @@ public class CreateEventController {
     private EventEquipmentRepository eventEquipmentRepository;
 
     @RequestMapping("/createEvent")
-    public String createEvent(String eventtitle, Timestamp starttime, Timestamp endtime, String eventdescription,
-                                   Integer numofpeople, String eventtag, String eventphoto,
-                                   Integer creatorid, String location, String equipmentname){
+    public String createEvent(@RequestParam String eventtitle, @RequestParam Timestamp starttime, @RequestParam Timestamp endtime,
+                              @RequestParam String eventdescription, @RequestParam Integer numofpeople, @RequestParam String eventtag,
+                              @RequestParam String eventphoto, @RequestParam Integer creatorid, @RequestParam String location,
+                              @RequestParam("equipmentid") List<Integer> equipmentid){
         //if user is exist
-        if(userRepository.findByUserid(creatorid) != null && userRepository.findByUserid(creatorid).getIsdelete() == false
-                && equipmentRepository.findByEquipmentname(equipmentname) != null){
+        if(userRepository.findByUserid(creatorid) != null && userRepository.findByUserid(creatorid).getIsdelete() == false){
             Integer nownum = 1;
-            com.BackEnd.domain.Event event = eventRepository.save(new com.BackEnd.domain.Event(eventtitle, starttime, endtime, eventdescription,
-                    numofpeople, nownum, eventtag, creatorid, eventphoto, location, false));
-            eventEquipmentRepository.save(new com.BackEnd.domain.EventEquipment(event.getEventid(),
-                    equipmentRepository.findByEquipmentname(equipmentname).getEquipmentid()));
+            com.BackEnd.domain.Event event = eventRepository.save(new com.BackEnd.domain.Event(eventtitle, starttime,
+                    endtime, eventdescription, numofpeople, nownum, eventtag, creatorid, eventphoto, location, false));
+            for(Integer eId: equipmentid){
+                eventEquipmentRepository.save(new com.BackEnd.domain.EventEquipment(event.getEventid(), eId));
+            }
+//            ArrayList<Integer>
+//            for(int i = 0; i < equipmentid.size(); i++)
+//            {
+//                Integer eId = equipmentid.get(i);
+//                eventEquipmentRepository.save(new com.BackEnd.domain.EventEquipment(event.getEventid(), eId));
+//            }
+//            eventEquipmentRepository.save(new com.BackEnd.domain.EventEquipment(event.getEventid(),
+//                    equipmentRepository.findByEquipmentname(equipmentname).getEquipmentid()));
             return "success";
         }
         return "failure";
