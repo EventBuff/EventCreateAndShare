@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 20:43:01
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-23 18:20:13
+* @Last Modified time: 2016-11-23 20:24:08
 */
 
 import React, { Component, PropTypes } from 'react';
@@ -12,6 +12,8 @@ import { Link } from 'react-router';
 import { HelpBlock, Modal, Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
   from 'react-bootstrap';
 import Datetime from 'react-datetime';
+import ReactDom from 'react-dom';
+
 
 // Need update for the api
 class CreateEvent extends Component {
@@ -24,51 +26,42 @@ class CreateEvent extends Component {
 
     this.state = {
       posts: '',
-      postsCheckNum: 0,
+      equipmentCheckNum: 0,
       userid: localStorage["userid"],
       startTime: new Date(),
       endTime: new Date(),
       equipment: ''
     };
-    this.showEventDetail = this.showEventDetail.bind(this);
     this.handleChangeStartTime = this.handleChangeStartTime.bind(this);
     this.handleChangeEndTime = this.handleChangeEndTime.bind(this);
+    this.getEquipment = this.getEquipment.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.getTimeStamp = this.getTimeStamp.bind(this);
   }
 
   componentWillMount() {
+    // this.getEquipment();
   }
 
   componentDidMount() {
-    axios.get('/equipment', {
-      params: {
-      }
-      }).then(res => {
-        this.setState({
-          equipment: res.data
-      });
-    });
-    console.log(this.state.equipment);
+    this.getEquipment();
   }
 
-  showEventDetail(data) {
-    console.log(data);
-    console.log("is log in" + this.state.userid);
-    if (data === null || data.length === 0) {
-      this.setState({
-          posts: ''
+  getEquipment(){
+    axios.get('/equipment', {
+        
+      }).then(res => {
+        
+        this.setState({
+          equipment: res.data,
+          equipmentCheckNum: 1
+        });
       });
-    } else {
-      var content =
-          <div>
-            <h4><Link to={`/eventDetail/${data.eventid}`}> {data.eventtitle} </Link></h4>
-            <p> {data.eventtag} </p>
-            <p> {data.eventdescription} </p>
-          </div>;
-      this.setState({
-          posts: content,
-          postsCheckNum: 1
-      });
-    }
+    // console.log(this.state.equipment);
+  }
+
+  getTimeStamp(now) {
+    return (now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate())  + " " + now.getHours() + ':' + ((now.getMinutes() < 10) ? ("0" + now.getMinutes()) : (now.getMinutes())) + ':' + ((now.getSeconds() < 10) ? ("0" + now.getSeconds()) : (now.getSeconds())));
   }
 
   handleChangeStartTime(event) {
@@ -81,8 +74,56 @@ class CreateEvent extends Component {
     this.setState({endTime: event._d});
   }
 
+  handleSubmit(){
+    // console.log("click submit profile");
+    var eventtitle = ReactDom.findDOMNode(this.refs.eventtitle).value;
+    var starttime = this.getTimeStamp(this.state.startTime);
+    var endtime = this.getTimeStamp(this.state.endTime);
+    
+    var eventdescription = ReactDom.findDOMNode(this.refs.eventdescription).value;
+    var numofpeople = ReactDom.findDOMNode(this.refs.numofpeople).value;
+    var eventtag = ReactDom.findDOMNode(this.refs.eventtag).value;
+    
+    var eventphoto = ReactDom.findDOMNode(this.refs.eventphoto).value;
+    var creatorid = this.state.userid;
+    var location = ReactDom.findDOMNode(this.refs.location).value;
+
+    let selected = ReactDom.findDOMNode(this.refs.equipmentid).value
+    
+    console.log(selected);
+    console.log(endtime);
+    console.log(starttime);
+    console.log(creatorid);
+    console.log(eventphoto);
+    
+    axios.get('/createEvent', {
+        params: {
+          eventtitle: eventtitle,
+          starttime: starttime,
+          endtime: endtime,
+          eventdescription: eventdescription,
+          numofpeople: numofpeople,
+          eventtag: eventtag,
+          eventphoto: eventphoto,
+          creatorid: creatorid,
+          location: location,
+          equipmentid: selected
+        }
+      }).then(res => {
+        // console.log(res.data);
+        if (res.data === 'success'){
+          alert("You have successfully ceate an event");
+        }
+    }); 
+    
+  }
   render() {
-    var posts = this.state.posts
+    var equipmentlist = this.state.equipmentCheckNum === 1
+      ? this.state.equipment.map((x) => 
+          <option key={x.equipmentid} value={x.equipmentid}>{x.equipmentname}</option>
+        )
+      : ''
+    var posts = this.state.posts;
     var content = 
         <form onSubmit={this.handleSubmit}>
               <FormGroup>
@@ -128,6 +169,20 @@ class CreateEvent extends Component {
                   <option value="tea/coffee">tea/coffee</option>
                 </FormControl>
               </FormGroup>
+              <FormGroup controlId="formControlsSelectMultiple">
+                <ControlLabel>Select Equipment</ControlLabel>
+                <FormControl componentClass="select" multiple ref="equipmentid">
+                  {equipmentlist}
+                </FormControl>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Photo Url</ControlLabel>
+                <FormControl
+                  type="text"
+                  placeholder="http://example.com/example.jpg"
+                  ref="eventphoto"
+                />
+              </FormGroup>
               <FormGroup>
                 <ControlLabel>location</ControlLabel>
                 <FormControl
@@ -139,12 +194,15 @@ class CreateEvent extends Component {
               <Button type="submit">
                 Submit
               </Button>
+              <Button onClick={this.handleSubmit}>
+                Test
+              </Button>
             </form>
     return(
       <div>
-
         <Col md={3} />
         <Col md={6}>
+        
         {posts}
         {content}
         </Col>
