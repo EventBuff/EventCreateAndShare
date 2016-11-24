@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:56:58
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-23 15:05:30
+* @Last Modified time: 2016-11-23 18:18:12
 */
 
 
@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import './Profile.css';
 // import Navigation from './Navigation';
 import axios from 'axios';
-import { FormControl, Button, ControlLabel, FormGroup, Row, Col, ListGroup, ListGroupItem}
+import { Table, Panel, FormControl, Button, ControlLabel, FormGroup, Row, Col, ListGroup, ListGroupItem}
   from 'react-bootstrap';
 import ReactDom from 'react-dom';
 import { Link } from 'react-router';
@@ -42,14 +42,14 @@ class Profile extends Component {
   checkProfile(){
     this.setState({'check_class': 'active', event_class: 'album', edit_class: 'album'})
     const slug = this.props.params.slug;
-    console.log("for userid " + slug);
+    // console.log("for userid " + slug);
     axios.get('/profile', {
       params: {
         userid: slug
       }
       }).then(res => {
         this.showProfile(res.data);
-      });
+    });
   }
 
   componentDidMount() {
@@ -63,7 +63,7 @@ class Profile extends Component {
     this.setState({
       profileData: JSON.stringify(data)
     })
-    console.log(data);
+    // console.log(data);
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
@@ -71,12 +71,43 @@ class Profile extends Component {
     } else {
       var content =
           <div>
-            <h4> {data.email} </h4>
-            <p> {data.gender} </p>
-            <p> {data.firstname} </p>
-            <p> {data.lastname} </p>
-            <p> {data.phonenumber} </p>
-          </div>;
+            <Col md={8}>
+              <Panel header={`${data.firstname}'s Profile`}>
+                <Table responsive className="table-user-profile" >
+                    <tbody>
+                      <tr>
+                        <td>Email:</td>
+                        <td>{data.email}</td>
+                      </tr>
+                      <tr>
+                        <td>User Name:</td>
+                        <td>{data.username}</td>
+                      </tr>
+                      <tr>
+                        <td>Name:</td>
+                        <td>{data.firstname} {data.lastname}</td>
+                      </tr>
+                      <tr>
+                        <td>Gender</td>
+                        <td>{data.gender}</td>
+                      </tr>
+                      <tr>
+                        <td>Phonne Number</td>
+                        <td>{data.phonenumber}</td>
+                      </tr>
+                      <tr>
+                        <td>Location</td>
+                        <td>{data.location}</td>
+                      </tr>
+                      <tr>
+                        <td>Description</td>
+                        <td>{data.description}</td>
+                      </tr>
+                    </tbody>
+                  </Table>
+              </Panel>
+            </Col>
+          </div>
       this.setState({
           posts: content,
           postsCheckNum: 1
@@ -91,7 +122,7 @@ class Profile extends Component {
   }
 
   showEditProfile(data) {
-    console.log(data);
+    // console.log(data);
     if (data === null || data.length === 0) {
       this.setState({
           posts: ''
@@ -107,7 +138,7 @@ class Profile extends Component {
 
   handleSubmit(){
     var data = JSON.parse(this.state.profileData);
-    console.log("click submit profile");
+    // console.log("click submit profile");
     var edit_id = this.state.userid;
     var edit_email = data.email;
     var edit_username = data.username;
@@ -129,7 +160,7 @@ class Profile extends Component {
           description: edit_description
         }
       }).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data === 'success'){
           alert("You have successfully edit your profile");
         }
@@ -156,9 +187,11 @@ class Profile extends Component {
           posts: ''
       });
     } else {
+      console.log(data);
       var content = data.map((x) =>
           <div key={x.eventid}>
-            <h4><Link to={`/eventDetail/${x.eventid}`}> {x.eventtitle} </Link></h4>
+            <h1>{x.creatorname}</h1>
+            <h4><Link to={`/eventDetail/${x.event.eventid}`}> {x.event.eventtitle} </Link></h4>
             <p> {x.eventdescription} </p>
           </div>
       );
@@ -173,11 +206,11 @@ class Profile extends Component {
   render() {
     var editProfileContent = '';
     if (this.state.profileData !== null && this.state.profileData.length !== 0){
-      console.log(this.state.profileData);
+      // console.log(this.state.profileData);
       var data = JSON.parse(this.state.profileData);
       var editProfileContent = 
           <div>
-            <Col md={6}>
+            <Col md={8}>
             <form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <ControlLabel>Email</ControlLabel>
@@ -243,11 +276,6 @@ class Profile extends Component {
               <Button type="submit">
                 Submit
               </Button>
-              <Button
-                onClick={this.handleSubmit}
-              >
-                Test
-              </Button>
             </form>
             </Col>
           </div>
@@ -263,6 +291,7 @@ class Profile extends Component {
           <Row>
           </Row>
           <Row>
+            <Col md={1} /> 
             <Col className="ProfileNavigation" xs={12} md={3}>
               <p> Profile </p>
               <ListGroup>
@@ -271,7 +300,7 @@ class Profile extends Component {
                 <ListGroupItem className={this.state.edit_class} onClick={this.editProfile}>Edit Profile</ListGroupItem>
               </ListGroup>
             </Col>
-            <Col md={9}>
+            <Col md={8}>
               {posts}
             </Col>
           </Row>
