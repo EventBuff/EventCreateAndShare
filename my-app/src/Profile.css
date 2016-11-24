@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:57:09
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-06 22:02:35
+* @Last Modified time: 2016-11-23 17:14:06
 */
 
 .ProfileNavigation {
@@ -15,3 +15,12 @@ button.active.list-group-item {
 button.album.list-group-item {
   text-align: center;
 }
+
+
+
+.table-user-profile {
+    border-top: 1px solid rgb(221, 221, 221);
+    text-align: center;
+    margin-top:20px;
+}
+

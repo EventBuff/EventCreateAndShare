@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 20:43:01
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-23 15:57:40
+* @Last Modified time: 2016-11-23 17:43:14
 */
 
 import React, { Component, PropTypes } from 'react';
@@ -113,9 +113,10 @@ class CreateEvent extends Component {
               <FormGroup controlId="formControlsSelect">
                 <ControlLabel>Select Tag</ControlLabel>
                 <FormControl componentClass="select" ref="eventtag">
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
-                  <option value="other">Other</option>
+                  <option value="hiking">hiking</option>
+                  <option value="study">study</option>
+                  <option value="party">shopping</option>
+                  <option value="tea/coffee">tea/coffee</option>
                 </FormControl>
               </FormGroup>
               <FormGroup>
