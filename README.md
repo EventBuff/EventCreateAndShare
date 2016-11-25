@@ -30,6 +30,7 @@ You can set a max number of participants in your event.
 - Spring MVC
 - Spring Session
 - Junit
+
 #### Front-End
 - React
 - Bootstrap, react-bootstrap
