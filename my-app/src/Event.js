@@ -15,6 +15,8 @@ import { Button, Row, Col}
   from 'react-bootstrap';
 import { Link } from 'react-router';
 import Autosuggest from 'react-autosuggest';
+ 
+
 
 // Imagine you have a list of languages that you'd like to autosuggest.
 const Tags = [
@@ -58,6 +60,7 @@ const renderSuggestion = suggestion => (
 );
 
 class Event extends Component {
+
   constructor(props) {
     super(props);
 
@@ -90,6 +93,7 @@ class Event extends Component {
       // });
   }
 
+
   componentDidMount() {
     // this.myFunction();
   }
@@ -112,6 +116,8 @@ class Event extends Component {
 
   }
 
+
+
   showPosts(data){
     if (data === null || data.length === 0) {
       this.setState({
@@ -120,18 +126,24 @@ class Event extends Component {
     } else {
       var content = data.map((x) =>
           <div key={x.eventid}>
-            <h1>{x.creatorname}</h1>
-            <h4><Link to={`/eventDetail/${x.event.eventid}`}> {x.event.eventtitle} </Link></h4>
-            <p> {x.event.eventdescription} </p>
-            <p> {x.event.eventtag} </p>
+                <div className="Event-introduction">
+                <img src={require(x.event.eventphoto)} role="presentation"/>
+                <h1><Link to={`/eventDetail/${x.event.eventid}`}> {x.event.eventtitle}</Link></h1>
+                <p> {x.event.eventdescription} </p>
+
+                <p><strong>creator: </strong>{x.creatorname}</p>
+                <p> <strong>tag: </strong>{x.event.eventtag} </p>
+          </div>
           </div>
       );
+
 
       this.setState({
           posts: content
       });
     }
   }
+
 
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.

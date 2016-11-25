@@ -189,10 +189,15 @@ class Profile extends Component {
     } else {
       console.log(data);
       var content = data.map((x) =>
-          <div key={x.eventid}>
-            <h1>{x.creatorname}</h1>
-            <h4><Link to={`/eventDetail/${x.event.eventid}`}> {x.event.eventtitle} </Link></h4>
-            <p> {x.eventdescription} </p>
+        <div key={x.eventid}>
+                <div className="Event-introduction">
+                <img src={require(x.event.eventphoto)} role="presentation"/>
+                <h1><Link to={`/eventDetail/${x.event.eventid}`}> {x.event.eventtitle}</Link></h1>
+                <p> {x.event.eventdescription} </p>
+
+                <p><strong>creator: </strong>{x.creatorname}</p>
+                <p> <strong>tag: </strong>{x.event.eventtag} </p>
+          </div>
           </div>
       );
 

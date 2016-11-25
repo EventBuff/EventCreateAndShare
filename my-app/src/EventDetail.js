@@ -170,9 +170,17 @@ class EventDetail extends Component {
       var close =  event_data.isclose === true?1:0;
       var content =
           <div>
-            <h4><Link to={`/eventDetail/${event_data.eventid}`}> {event_data.eventtitle} </Link></h4>
+          <div className="event-detail-introduction">
+            <h1><Link to={`/eventDetail/${event_data.eventid}`}> {event_data.eventtitle} </Link></h1>
+            <div className="event-detail-introduction-image">
+            <img src={require(event_data.eventphoto)} role="presentation"/>
+            </div>
+            <div className=".event-detail-introduction-info">
             <p> {event_data.eventtag} </p>
             <p> {event_data.eventdescription} </p>
+            </div>
+          </div>
+          <div className="event-detail-introduction">
             <p> {beginTime} </p>
             <p> {endtime} </p>
             <p> numofpeople {event_data.numofpeople} </p>
@@ -183,7 +191,8 @@ class EventDetail extends Component {
             <p> {event_data.closereason} </p>
             <p> {data.creatorname} </p>
             {user_event_content}
-            <div>
+            </div>
+          <div>
             <Comment eventid={this.state.eventid}/>
             </div>
           </div>
@@ -206,12 +215,8 @@ class EventDetail extends Component {
 
 
     return(
-      <div>
-        <Col md={3}>
-        </Col>
-        <Col xs={12} md={9}>
+      <div className="EventDetail">
           {posts}
-        </Col>
       </div>
     );
   }
