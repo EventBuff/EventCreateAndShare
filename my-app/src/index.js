@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 
 const Home = () => <h1>Hello from Home!</h1>
+
 const routes =
 <Router history={browserHistory}>
   <Route path="/" component={App}>
