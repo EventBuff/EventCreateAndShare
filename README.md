@@ -23,8 +23,10 @@ You can make edits leading up to the event. However, once you reach a large numb
 #### Add Limit
 You can set a max number of participants in your event.
 
+
 ## Used Framework
 #### Back-End
+- Maven
 - Spring Boot
 - Spring JPA
 - Spring MVC
@@ -52,7 +54,27 @@ This project is running based on `java version:1.8.0_111` and use `Maven` a soft
 
 The configuration file for the mysql should be in `resources` folder.
 
-You can run the server by `Spring Boot`, because an embedded tomcat is in the `Spring Boot`. Also you can use `maven` to deploy in your Tomcat web folder.
+You can run the server by `Spring Boot`, because an embedded tomcat is in the `Spring Boot`. Also you can use `maven` to deploy war in your Tomcat web folder.
+
+The file name is application.properties:
+
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/eventshare
+spring.datasource.username=root
+spring.datasource.password=yourpassword
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+#spring.jpa.properties.hibernate.hbm2ddl.auto=create-drop
+spring.jpa.properties.hibernate.hbm2ddl.auto=update
+
+spring.redis.host=localhost
+#spring.redis.password=secret
+spring.redis.port=6379
+````
+
+You should use `mvn build` to get the xxx.war file and put the file in Tomcat webapps folder
+
+The API we developed is here:[google docs](https://docs.google.com/document/d/1MEqB7-t_W-4Xhea0ZpYBZ-lD48I3mV2VLI6RIl7oQhA/edit)
 
 #### Set Node Environment
 You should have node.js dependency. type `node --version` to see your node situation. cd the `my-app` folder. And use the following commands to install the js dependencies and start the server.
@@ -61,13 +83,13 @@ You should have node.js dependency. type `node --version` to see your node situa
 - `create-react-app` is the tool to generate this app. You do not need it now.
 
 Use the following to deploy the node server.
-```
+```sh
 npm install
 npm start
 ```
 
 In the project directory, you can run:
-```
+```sh
 npm start
 ```
 Runs the app in the development mode.
@@ -75,12 +97,12 @@ Open http://localhost:3000 to view it in the browser.
 
 The page will reload if you make edits.
 You will also see any lint errors in the console.
-```
+```sh
 npm test
 ```
 Launches the test runner in the interactive watch mode.
 See the section about running tests for more information.
-```
+```sh
 npm run build
 ```
 Builds the app for production to the build folder.
@@ -88,7 +110,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
-```
+```sh
 npm run eject
 ```
 Note: this is a one-way operation. Once you eject, you can’t go back!
@@ -102,7 +124,7 @@ You don’t have to ever use eject. The curated feature set is suitable for smal
 ## Development
 ### Installing a Dependency
 Just in `my-app` folder run:
-```
+```sh
 npm install --save <library-name>
 ```
 
