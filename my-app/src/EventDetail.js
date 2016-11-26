@@ -176,7 +176,7 @@ class EventDetail extends Component {
             <hr/>
             </div>
             <div className="event-detail-introduction-image">
-            <img src={require(event_data.eventphoto)} role="presentation"/>
+            <img src={event_data.eventphoto} role="presentation"/>
             </div>
             <div className="event-detail-introduction-info">
             <p> {event_data.eventtag} </p>

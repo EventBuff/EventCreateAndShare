@@ -189,7 +189,7 @@ class Profile extends Component {
       var content = data.map((x) =>
         <div key={x.eventid}>
                 <div className="Event-introduction">
-                <img src={require(x.event.eventphoto)} role="presentation"/>
+                <img src={x.event.eventphoto} role="presentation"/>
                 <h1><Link to={`/eventDetail/${x.event.eventid}`}> {x.event.eventtitle}</Link></h1>
                 <p> {x.event.eventdescription} </p>
 
