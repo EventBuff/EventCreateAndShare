@@ -55,8 +55,11 @@ class Comment extends Component {
     } else {
       var content = data.map((x) =>
           <div key={x.commentid}>
+          <div className="event-comment">
+          <p>Anonymity</p>
             <h4>{x.comment} </h4>
-            <p> {x.userid} </p>
+            <hr/>
+            </div>
           </div>
       );
       // console.log(content);
@@ -120,7 +123,6 @@ class Comment extends Component {
 
     return(
         <div>
-        This is comment
           {posts}
           {makecomment_content}
         </div>

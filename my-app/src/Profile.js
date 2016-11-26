@@ -71,7 +71,6 @@ class Profile extends Component {
     } else {
       var content =
           <div>
-            <Col md={8}>
               <Panel header={`${data.firstname}'s Profile`}>
                 <Table responsive className="table-user-profile" >
                     <tbody>
@@ -92,7 +91,7 @@ class Profile extends Component {
                         <td>{data.gender}</td>
                       </tr>
                       <tr>
-                        <td>Phonne Number</td>
+                        <td>Phone Number</td>
                         <td>{data.phonenumber}</td>
                       </tr>
                       <tr>
@@ -106,7 +105,6 @@ class Profile extends Component {
                     </tbody>
                   </Table>
               </Panel>
-            </Col>
           </div>
       this.setState({
           posts: content,
@@ -215,7 +213,6 @@ class Profile extends Component {
       var data = JSON.parse(this.state.profileData);
       var editProfileContent = 
           <div>
-            <Col md={8}>
             <form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <ControlLabel>Email</ControlLabel>
@@ -282,7 +279,6 @@ class Profile extends Component {
                 Submit
               </Button>
             </form>
-            </Col>
           </div>
     }
     // var value = this.state.value;
@@ -291,12 +287,7 @@ class Profile extends Component {
       : this.state.posts;
     // list groun need to changed for editting
     return (
-      <div>
-        <div>
-          <Row>
-          </Row>
-          <Row>
-            <Col md={1} /> 
+        <div className="profile">
             <Col className="ProfileNavigation" xs={12} md={3}>
               <p> Profile </p>
               <ListGroup>
@@ -305,12 +296,10 @@ class Profile extends Component {
                 <ListGroupItem className={this.state.edit_class} onClick={this.editProfile}>Edit Profile</ListGroupItem>
               </ListGroup>
             </Col>
-            <Col md={8}>
+            <Col md={9}>
               {posts}
             </Col>
-          </Row>
         </div>
-      </div>
     );
   }
 }
