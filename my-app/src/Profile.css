@@ -24,3 +24,16 @@ button.album.list-group-item {
     margin-top:20px;
 }
 
+.Event-introduction{
+  border-style: solid;
+  border-width: 1px;
+  border-color: #C0C0C0;
+  padding:2%; 
+  margin-bottom: 20px;
+}
+
+.Event-introduction img{
+  position: relative;
+  width:100%;
+}
+

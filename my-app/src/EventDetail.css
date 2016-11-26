@@ -5,3 +5,39 @@
 * @Last Modified time: 2016-11-06 20:43:12
 */
 
+.EventDetail{
+	margin-left: 15%;
+	margin-right: 15%;
+	margin-bottom: 2%;
+	margin-top: 2%;
+}
+
+.EventDetail img{
+	position: relative;
+  width:100%;
+}
+
+.event-detail-introduction{
+	margin-bottom: 30px;
+	border-style: solid;
+	border-width: 1px;
+    border-color: #C0C0C0;
+
+}
+
+.event-detail-introduction-image{
+border-top: 1px solid #e9e9e9;
+clear: both;
+padding: 20px 20px 0 0;
+float: left;
+overflow: hidden;
+position: relative;
+width:50%;
+}
+
+.event-detail-introduction-info{
+border-top: 1px solid #e9e9e9;
+padding-top: 20px;
+overflow: hidden;
+position: relative;
+}
