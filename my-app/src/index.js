@@ -46,8 +46,8 @@ const Home = (() =>
     <Table className="index-developer-table" >
                     <tbody>
                      <tr>
-                        <td><strong>Shen Huang</strong></td>
-                        <td><strong>Yan Li</strong></td>
+                        <td><strong>SHEN HUANG</strong></td>
+                        <td><strong>YAN LI</strong></td>
                         <td><strong>AMIR KASHIPAZHA</strong></td>
                       </tr>
                       <tr>
