@@ -193,7 +193,9 @@ class Event extends Component {
                 inputProps={inputProps}
               />
               </div>
+              <div className="Event-button">
               {searchEventButton}
+              </div>
             </Col>
             <Col md={9}>
               {posts}

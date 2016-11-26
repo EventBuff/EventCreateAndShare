@@ -10,7 +10,7 @@ import './EventDetail.css';
 import Comment from './Comment';
 import axios from 'axios';
 import { Link } from 'react-router';
-import { Col, Button, Grid } from 'react-bootstrap';
+import { Table, Panel, Col, Button, Grid } from 'react-bootstrap';
 
 class EventDetail extends Component {
   static propTypes = {
@@ -171,29 +171,66 @@ class EventDetail extends Component {
       var content =
           <div>
           <div className="event-detail-introduction">
+          <div className="event-detail-introduction-h1">
             <h1><Link to={`/eventDetail/${event_data.eventid}`}> {event_data.eventtitle} </Link></h1>
+            <hr/>
+            </div>
             <div className="event-detail-introduction-image">
             <img src={require(event_data.eventphoto)} role="presentation"/>
             </div>
-            <div className=".event-detail-introduction-info">
+            <div className="event-detail-introduction-info">
             <p> {event_data.eventtag} </p>
             <p> {event_data.eventdescription} </p>
             </div>
           </div>
-          <div className="event-detail-introduction">
-            <p> {beginTime} </p>
-            <p> {endtime} </p>
-            <p> numofpeople {event_data.numofpeople} </p>
-            <p> nownum {event_data.nownum} </p>
-            <p> {event_data.eventphoto} </p>
-            <p> {event_data.location} </p>
-            <p> isclose {close} </p>
-            <p> {event_data.closereason} </p>
-            <p> {data.creatorname} </p>
-            {user_event_content}
+          <div className="event-detail-detail">
+          <Panel header="Event Details">
+                <Table responsive className="event-table" >
+                    <tbody>
+                     <tr>
+                        <td>Creator Name:</td>
+                        <td>{data.creatorname}</td>
+                      </tr>
+                      <tr>
+                        <td>Begin Time:</td>
+                        <td>{beginTime}</td>
+                      </tr>
+                      <tr>
+                        <td>End Time:</td>
+                        <td>{endtime}</td>
+                      </tr>
+                      <tr>
+                        <td>Number of People:</td>
+                        <td>{event_data.numofpeople}</td>
+                      </tr>
+                      <tr>
+                        <td>the Recent Number of Participants:</td>
+                        <td>{event_data.nownum}</td>
+                      </tr>
+                      <tr>
+                        <td>Location:</td>
+                        <td>{event_data.location}</td>
+                      </tr>
+                      <tr>
+                        <td>Is close:</td>
+                        <td>{close}</td>
+                      </tr>
+                      <tr>
+                        <td>Close Reason:</td>
+                        <td>{event_data.closereason}</td>
+                      </tr>
+                      <tr>
+                        <td>{user_event_content}</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </Table>
+              </Panel>
             </div>
           <div>
+           <Panel header="Comment">
             <Comment eventid={this.state.eventid}/>
+            </Panel>
             </div>
           </div>
       this.setState({
