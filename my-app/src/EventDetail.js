@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 20:43:01
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-23 15:15:38
+* @Last Modified time: 2016-11-28 11:10:55
 */
 
 import React, { Component, PropTypes } from 'react';
@@ -10,7 +10,7 @@ import './EventDetail.css';
 import Comment from './Comment';
 import axios from 'axios';
 import { Link } from 'react-router';
-import { Table, Panel, Col, Button, Grid } from 'react-bootstrap';
+import { Table, Panel, Button, Grid } from 'react-bootstrap';
 
 class EventDetail extends Component {
   static propTypes = {

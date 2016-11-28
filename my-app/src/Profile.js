@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 21:56:58
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-23 20:25:49
+* @Last Modified time: 2016-11-28 11:13:09
 */
 
 
@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import './Profile.css';
 // import Navigation from './Navigation';
 import axios from 'axios';
-import { Table, Panel, FormControl, Button, ControlLabel, FormGroup, Row, Col, ListGroup, ListGroupItem}
+import { Table, Panel, FormControl, Button, ControlLabel, FormGroup, Col, ListGroup, ListGroupItem}
   from 'react-bootstrap';
 import ReactDom from 'react-dom';
 import { Link } from 'react-router';
@@ -126,7 +126,7 @@ class Profile extends Component {
           posts: ''
       });
     } else {
-      var content =
+      // var content =
           
       this.setState({
           postsCheckNum: 0
@@ -135,11 +135,11 @@ class Profile extends Component {
   }
 
   handleSubmit(){
-    var data = JSON.parse(this.state.profileData);
+    // var data = JSON.parse(this.state.profileData);
     // console.log("click submit profile");
     var edit_id = this.state.userid;
-    var edit_email = data.email;
-    var edit_username = data.username;
+    // var edit_email = data.email;
+    // var edit_username = data.username;
     var edit_firstname = ReactDom.findDOMNode(this.refs.firstname).value;
     var edit_lastname = ReactDom.findDOMNode(this.refs.lastname).value;
     var edit_gender = ReactDom.findDOMNode(this.refs.gender).value;
@@ -211,7 +211,7 @@ class Profile extends Component {
     if (this.state.profileData !== null && this.state.profileData.length !== 0){
       // console.log(this.state.profileData);
       var data = JSON.parse(this.state.profileData);
-      var editProfileContent = 
+      editProfileContent = 
           <div>
             <form onSubmit={this.handleSubmit}>
               <FormGroup>
