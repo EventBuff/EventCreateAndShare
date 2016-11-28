@@ -22,17 +22,28 @@
 	border-style: solid;
 	border-width: 1px;
     border-color: #C0C0C0;
-    height:410px;
+    height:500px;
 
 }
 
-.event-detail-introduction-image{
+.event-detail-introduction img{
+width: 50%;
+height: 370px;
 float:left;
-width:50%;
-height: 200px;
 margin-right: 20px;
 margin-left:20px;
 }
+
+/*.event-detail-introduction-image{
+height: 200px;
+width: 50%;
+float:left;
+margin-right: 20px;
+margin-left:20px;
+position: relative;
+clip: rect(0px,200px,200px,0px);
+
+}*/
 
 .event-detail-introduction-info{
 margin-right: 20px;
@@ -52,8 +63,4 @@ margin-right:20px;
 .event-table{
 	border-top: 1px solid rgb(221, 221, 221);
     margin-top:20px;
-}
-
-.event-comment{
-	
 }
