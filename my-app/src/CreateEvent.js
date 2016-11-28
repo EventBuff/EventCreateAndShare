@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 20:43:01
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-28 11:10:42
+* @Last Modified time: 2016-11-28 11:37:46
 */
 
 import React, { Component, PropTypes } from 'react';
@@ -197,7 +197,7 @@ class CreateEvent extends Component {
               </Button>
             </form>
     return(
-      <div>
+      <div className="createEvent">
         <Col md={3} />
         <Col md={6}>
         

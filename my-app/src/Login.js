@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-07 17:26:13
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-16 11:44:54
+* @Last Modified time: 2016-11-28 11:37:12
 */
 
 import React, { Component } from 'react';
@@ -212,7 +212,7 @@ class Login extends Component {
   </Form>
 
     return (
-      <div>
+      <div className="login">
       <Row>
         <Col sm={4}/>
         <Col sm={6}>
