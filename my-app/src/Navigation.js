@@ -2,7 +2,7 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 14:58:09
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-14 11:31:39
+* @Last Modified time: 2016-11-28 11:33:38
 */
 
 /*
@@ -133,9 +133,6 @@ class Navigation extends Component {
             {log_content}
           </Navbar.Collapse>
         </Navbar>
-        <div className="content-div">
-
-        </div>
       </div>
     );
   }

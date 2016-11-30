@@ -2,14 +2,14 @@
 * @Author: Lich Amnesia
 * @Date:   2016-11-06 20:43:01
 * @Last Modified by:   Lich Amnesia
-* @Last Modified time: 2016-11-23 20:24:08
+* @Last Modified time: 2016-11-28 11:37:46
 */
 
 import React, { Component, PropTypes } from 'react';
 import './CreateEvent.css';
 import axios from 'axios';
-import { Link } from 'react-router';
-import { HelpBlock, Modal, Button, Col, ControlLabel, Form, FormGroup, FormControl, Checkbox}
+// import { Link } from 'react-router';
+import { HelpBlock, Button, Col, ControlLabel, FormGroup, FormControl}
   from 'react-bootstrap';
 import Datetime from 'react-datetime';
 import ReactDom from 'react-dom';
@@ -113,6 +113,7 @@ class CreateEvent extends Component {
         // console.log(res.data);
         if (res.data === 'success'){
           alert("You have successfully ceate an event");
+          window.location.href='/';
         }
     }); 
     
@@ -191,15 +192,12 @@ class CreateEvent extends Component {
                   ref="location"
                 />
               </FormGroup>
-              <Button type="submit">
-                Submit
-              </Button>
               <Button onClick={this.handleSubmit}>
-                Test
+                Submit
               </Button>
             </form>
     return(
-      <div>
+      <div className="createEvent">
         <Col md={3} />
         <Col md={6}>
         
